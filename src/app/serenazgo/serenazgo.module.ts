@@ -1,0 +1,16 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { SerenazgoRoutingModule } from './serenazgo-routing.module';
+import { HomeComponent } from './home/home.component';
+
+import { MaterialModule } from '../material/material.module';
+import { SerenoComponent } from './sereno/sereno.component';
+import { UnidadComponent } from './unidad/unidad.component';
+import { UnidadPipe } from './pipes/unidad.pipe';
+
+@NgModule({
+  declarations: [HomeComponent, SerenoComponent, UnidadComponent, UnidadPipe],
+  imports: [CommonModule, SerenazgoRoutingModule, MaterialModule],
+})
+export class SerenazgoModule {}

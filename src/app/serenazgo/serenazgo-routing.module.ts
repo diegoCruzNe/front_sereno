@@ -12,6 +12,11 @@ const routes: Routes = [
     children: [
       { path: 'sereno', component: SerenoComponent },
       { path: 'unidad', component: UnidadComponent },
+      {
+        path: 'serenos',
+        loadChildren: () =>
+          import('./serenos/serenos.module').then((m) => m.SerenosModule),
+      },
       { path: '**', redirectTo: 'sereno' },
     ],
   },

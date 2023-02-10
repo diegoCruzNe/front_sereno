@@ -1,9 +1,9 @@
 export interface Sereno {
-  id_sereno: number;
+  id_sereno?: number;
   dni: string;
   nombre: string;
   apellidos: string;
-  genero: boolean;
+  genero?: boolean;
   celular?: string;
   correo?: string;
   direccion?: string;

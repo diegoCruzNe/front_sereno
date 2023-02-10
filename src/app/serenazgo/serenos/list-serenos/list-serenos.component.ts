@@ -9,6 +9,7 @@ import { SerenosService } from '../services/serenos.service';
 })
 export class ListSerenosComponent implements OnInit {
   listSerenos: Sereno[] = [];
+  columnas = ['nombre', 'apellidos', 'genero', 'edad', 'iconos', 'imagen'];
 
   constructor(private serenoService: SerenosService) {}
 

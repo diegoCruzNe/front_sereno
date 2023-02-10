@@ -15,4 +15,8 @@ export class SerenosService {
   getSerenos(): Observable<Sereno[]> {
     return this.http.get<Sereno[]>(`${this.url}/serenos`);
   }
+
+  addSereno(sereno: Sereno): Observable<Sereno> {
+    return this.http.post<Sereno>(`${this.url}/serenos`, sereno);
+  }
 }

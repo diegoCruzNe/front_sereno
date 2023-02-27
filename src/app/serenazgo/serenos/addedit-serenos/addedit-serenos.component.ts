@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Sereno } from 'src/app/interfaces/sereno.interface';
 import { SerenosService } from '../services/serenos.service';
+import Swal from 'sweetalert2';
+import { DatePipe } from '@angular/common';
+import { switchMap } from 'rxjs';
+import { Police } from '../../../interfaces/police.interface';
 
 @Component({
   selector: 'app-addedit-serenos',
@@ -11,11 +15,15 @@ import { SerenosService } from '../services/serenos.service';
 })
 export class AddeditSerenosComponent implements OnInit {
   form: FormGroup;
+  fechaHoy = new Date();
+  sereno!: Police;
 
   constructor(
     private fb: FormBuilder,
     private serenoService: SerenosService,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe,
+    private activatedRoute: ActivatedRoute
   ) {
     this.form = fb.group({
       dni: ['', [Validators.required]],
@@ -25,29 +33,58 @@ export class AddeditSerenosComponent implements OnInit {
       celular: [''],
       correo: [''],
       direccion: [''],
-      nacimiento: ['', Validators.required],
+      nacimiento: [null, Validators.required],
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.router.url.includes('editar')) return;
+
+    this.activatedRoute.params
+      .pipe(switchMap(({ id }) => this.serenoService.getSerenoById(id)))
+      .subscribe((sereno) => {
+        this.sereno = sereno;
+        this.form.patchValue({
+          dni: this.sereno.dni,
+        });
+      });
+  }
 
   addEditSereno() {
     const sereno: Sereno = {
-      dni: this.form.value.dni,
+      dni: this.form.value.dni.toString(),
       nombre: this.form.value.nombre,
       apellidos: this.form.value.apellidos,
       genero: this.form.value.genero,
       celular: this.form.value.celular,
       correo: this.form.value.correo,
       direccion: this.form.value.direccion,
-      nacimiento: this.form.value.nacimiento,
+      nacimiento: this.datePipe.transform(
+        this.form.value.nacimiento.toString(),
+        'yyyy-MM-dd'
+      )!,
     };
 
-    console.log(sereno);
-    console.log(this.form.invalid);
+    this.serenoService.addSereno(sereno).subscribe({
+      next: (res) => {
+        if (res) this.form.reset();
+        this.alerta();
+      },
+      error: (err) => console.log(err),
+    });
   }
 
   btnCancelar() {
     this.router.navigate(['./serenazgo/serenos/list']);
+  }
+
+  alerta() {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: `Sereno agregado!`,
+      showConfirmButton: false,
+      timer: 1500,
+    }).then(() => this.router.navigate(['./serenazgo/serenos/list']));
   }
 }

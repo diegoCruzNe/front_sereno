@@ -7,7 +7,13 @@
       <!-- Dni -->
       <mat-form-field class="cimput">
         <mat-label>Dni</mat-label>
-        <input matInput formControlName="dni" type="number" />
+        <input
+          matInput
+          formControlName="dni"
+          type="number"
+          max="99999999"
+          min="10000000"
+        />
       </mat-form-field>
 
       <!-- Nombre -->
@@ -41,7 +47,8 @@
 
       <!-- Correo -->
       <mat-form-field class="cimput">
-        <mat-label>Correo</mat-label><input matInput formControlName="correo" />
+        <mat-label>Correo</mat-label
+        ><input matInput formControlName="correo" type="email" />
       </mat-form-field>
 
       <!-- Direccion -->
@@ -52,8 +59,13 @@
 
       <!-- Nacimiento -->
       <mat-form-field class="cimput">
-        <mat-label>Nacimiento</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="nacimiento" />
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="nacimiento"
+          [max]="fechaHoy"
+        />
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle
           matIconSuffix
@@ -70,6 +82,7 @@
         type="submit"
         color="primary"
         mat-button
+        cdkFocusInitial
       >
         Guardar
       </button>

@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./serenazgo/serenazgo.module').then((m) => m.SerenazgoModule),
   },
+  {
+    path: '**',
+    redirectTo: 'serenazgo',
+  },
 ];
 
 @NgModule({

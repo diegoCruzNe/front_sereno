@@ -11,6 +11,7 @@ const routes: Routes = [
     children: [
       { path: 'list', component: ListSerenosComponent },
       { path: 'addedit', component: AddeditSerenosComponent },
+      { path: 'editar/:id', component: AddeditSerenosComponent },
       { path: '**', redirectTo: 'list' },
     ],
   },

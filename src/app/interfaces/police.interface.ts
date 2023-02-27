@@ -1,4 +1,4 @@
-export interface Sereno {
+export interface Police {
   id_sereno?: number;
   dni: string;
   nombre: string;
@@ -9,4 +9,5 @@ export interface Sereno {
   direccion?: string;
   nacimiento: string;
   imagen?: string;
+  edad: number;
 }

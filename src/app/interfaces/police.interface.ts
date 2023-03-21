@@ -3,7 +3,7 @@ export interface Police {
   dni: string;
   nombre: string;
   apellidos: string;
-  genero?: number;
+  genero?: boolean;
   celular?: string;
   correo?: string;
   direccion?: string;

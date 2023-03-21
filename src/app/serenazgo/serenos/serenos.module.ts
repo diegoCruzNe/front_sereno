@@ -11,6 +11,7 @@ import { ListSerenosComponent } from './list-serenos/list-serenos.component';
 import { MaterialModule } from 'src/app/material/material.module';
 
 import { EdadPipe } from './pipes/edad.pipe';
+import { VerserenoComponent } from './versereno/versereno.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { EdadPipe } from './pipes/edad.pipe';
     AddeditSerenosComponent,
     ListSerenosComponent,
     EdadPipe,
+    VerserenoComponent,
   ],
   imports: [
     CommonModule,

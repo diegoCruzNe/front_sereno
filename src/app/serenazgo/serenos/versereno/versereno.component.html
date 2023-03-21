@@ -1,0 +1,26 @@
+<div class="fle">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Cruz Neciosup</mat-card-title>
+      <mat-card-subtitle>Diego Jose</mat-card-subtitle>
+    </mat-card-header>
+    <img
+      mat-card-image
+      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+      alt="Photo of a Shiba Inu"
+    />
+    <mat-card-content>
+      <p>
+        <strong>Nacimiento: </strong>
+        {{
+          sereno.nacimiento | date : "fullDate" : "+0000" : "es-PE" | titlecase
+        }}
+        <br />
+        <strong>Sexo: </strong> Masculino
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="warn">Regresar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

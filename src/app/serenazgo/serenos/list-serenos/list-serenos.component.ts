@@ -14,6 +14,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Police } from 'src/app/interfaces/police.interface';
 
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-list-serenos',
   templateUrl: './list-serenos.component.html',
@@ -49,5 +51,28 @@ export class ListSerenosComponent implements OnInit, AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  eliminar(id: number) {
+    Swal.fire({
+      title: '¿Está seguro?',
+      text: 'No podrás revertir los cambios',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //Swal.fire('Eliminado!', 'El sereno fue eliminado.', 'success');
+        this.serenoService.deleteSerenoById(id).subscribe({
+          next: (resp) => {
+            Swal.fire('Eliminado!', 'El sereno fue eliminado.', 'success');
+            this.listarSerenos();
+          },
+          error: (err) => console.error(err),
+        });
+      }
+    });
   }
 }

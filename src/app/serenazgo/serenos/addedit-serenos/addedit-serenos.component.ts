@@ -6,7 +6,6 @@ import { SerenosService } from '../services/serenos.service';
 import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
 import { switchMap } from 'rxjs';
-import { Police } from '../../../interfaces/police.interface';
 
 @Component({
   selector: 'app-addedit-serenos',
@@ -16,7 +15,7 @@ import { Police } from '../../../interfaces/police.interface';
 export class AddeditSerenosComponent implements OnInit {
   form: FormGroup;
   fechaHoy = new Date();
-  sereno!: Police;
+  flag: boolean = false; /* True = Agregar | False = Editar */
 
   constructor(
     private fb: FormBuilder,
@@ -38,14 +37,27 @@ export class AddeditSerenosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.router.url.includes('editar')) return;
+    if (!this.router.url.includes('editar')) {
+      this.flag = true;
+      return;
+    }
 
     this.activatedRoute.params
       .pipe(switchMap(({ id }) => this.serenoService.getSerenoById(id)))
       .subscribe((sereno) => {
-        this.sereno = sereno;
+        const fecha = new Date(sereno.nacimiento);
+
         this.form.patchValue({
-          dni: this.sereno.dni,
+          dni: sereno.dni,
+          nombre: sereno.nombre,
+          apellidos: sereno.apellidos,
+          genero: sereno.genero === true ? '1' : '0',
+          celular: sereno.celular,
+          correo: sereno.correo,
+          direccion: sereno.direccion,
+          nacimiento: new Date(
+            fecha.getTime() + Math.abs(fecha.getTimezoneOffset() * 60000)
+          ),
         });
       });
   }
@@ -55,7 +67,7 @@ export class AddeditSerenosComponent implements OnInit {
       dni: this.form.value.dni.toString(),
       nombre: this.form.value.nombre,
       apellidos: this.form.value.apellidos,
-      genero: this.form.value.genero,
+      genero: Number(this.form.value.genero),
       celular: this.form.value.celular,
       correo: this.form.value.correo,
       direccion: this.form.value.direccion,
@@ -65,24 +77,32 @@ export class AddeditSerenosComponent implements OnInit {
       )!,
     };
 
-    this.serenoService.addSereno(sereno).subscribe({
-      next: (res) => {
-        if (res) this.form.reset();
-        this.alerta();
-      },
-      error: (err) => console.log(err),
-    });
+    if (this.flag) {
+      this.serenoService.addSereno(sereno).subscribe({
+        next: (res) => this.alerta('Sereno agregado!'),
+        error: (err) => console.log(err),
+      });
+    } else {
+      this.activatedRoute.params
+        .pipe(
+          switchMap(({ id }) => this.serenoService.updateSerenoById(id, sereno))
+        )
+        .subscribe({
+          next: (res) => this.alerta('Sereno editado!'),
+          error: (err) => console.log(err),
+        });
+    }
   }
 
   btnCancelar() {
     this.router.navigate(['./serenazgo/serenos/list']);
   }
 
-  alerta() {
+  alerta(mensaje: string) {
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: `Sereno agregado!`,
+      title: `${mensaje}`,
       showConfirmButton: false,
       timer: 1500,
     }).then(() => this.router.navigate(['./serenazgo/serenos/list']));

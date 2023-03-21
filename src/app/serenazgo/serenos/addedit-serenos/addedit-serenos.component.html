@@ -84,7 +84,7 @@
         mat-button
         cdkFocusInitial
       >
-        Guardar
+        {{ flag ? "Agregar" : "Editar" }}
       </button>
       <button type="button" color="warn" mat-button (click)="btnCancelar()">
         Cancelar

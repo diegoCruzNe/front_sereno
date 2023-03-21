@@ -24,4 +24,12 @@ export class SerenosService {
   getSerenoById(id: number): Observable<Police> {
     return this.http.get<Police>(`${this.url}/serenos/${id}`);
   }
+
+  updateSerenoById(id: number, sereno: Sereno): Observable<Sereno> {
+    return this.http.put<Sereno>(`${this.url}/serenos/${id}`, sereno);
+  }
+
+  deleteSerenoById(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.url}/serenos/${id}`);
+  }
 }

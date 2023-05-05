@@ -1,0 +1,22 @@
+.c-flex {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.example-card {
+  max-width: 20vw;
+  min-width: 16rem;
+  margin-top: 2rem;
+}
+
+.button-flex {
+  display: flex;
+  justify-content: flex-end;
+}
+
+mat-paginator {
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+}

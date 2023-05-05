@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { SerenoComponent } from './sereno/sereno.component';
-import { UnidadComponent } from './unidad/unidad.component';
 
 const routes: Routes = [
   {
@@ -11,13 +10,17 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'sereno', component: SerenoComponent },
-      { path: 'unidad', component: UnidadComponent },
       {
         path: 'serenos',
         loadChildren: () =>
           import('./serenos/serenos.module').then((m) => m.SerenosModule),
       },
-      { path: '**', redirectTo: 'sereno' },
+      {
+        path: 'unidades',
+        loadChildren: () =>
+          import('./unidad/unidad.module').then((m) => m.UnidadModule),
+      },
+      { path: '**', redirectTo: 'unidades' },
     ],
   },
 ];

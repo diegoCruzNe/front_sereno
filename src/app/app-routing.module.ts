@@ -8,8 +8,13 @@ const routes: Routes = [
       import('./serenazgo/serenazgo.module').then((m) => m.SerenazgoModule),
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+
+  {
     path: '**',
-    redirectTo: 'serenazgo',
+    redirectTo: 'auth',
   },
 ];
 

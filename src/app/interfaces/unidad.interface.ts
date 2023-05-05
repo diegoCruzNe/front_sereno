@@ -1,7 +1,8 @@
 export interface Unidad {
-  id_unidad: number;
+  id_unidad?: number;
   placa: string;
-  descripcion?: string;
+  descripcion: string;
   estado: number;
-  tipo_unidad: number;
+  fk_tipo_unidad: number;
+  imagen?: string;
 }

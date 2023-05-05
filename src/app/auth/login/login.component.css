@@ -1,0 +1,27 @@
+.flex-login {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.card-login {
+  width: 230px;
+  margin-top: 18vh;
+}
+
+.body-2 {
+  margin-bottom: 0;
+  height: 100vh;
+  background-image: url("src/assets/olas.svg");
+  background-size: contain;
+  background-position-x: center;
+  background-position-y: bottom;
+  background-repeat: no-repeat;
+}
+
+a {
+  text-decoration: none;
+  color: #3f51b5;
+  margin-left: 10px;
+}

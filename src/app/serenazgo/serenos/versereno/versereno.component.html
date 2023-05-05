@@ -1,8 +1,8 @@
 <div class="fle">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Cruz Neciosup</mat-card-title>
-      <mat-card-subtitle>Diego Jose</mat-card-subtitle>
+      <mat-card-title>{{ sereno.apellidos | uppercase }}</mat-card-title>
+      <mat-card-subtitle> {{ sereno.nombre | uppercase }} </mat-card-subtitle>
     </mat-card-header>
     <img
       mat-card-image
@@ -13,14 +13,36 @@
       <p>
         <strong>Nacimiento: </strong>
         {{
-          sereno.nacimiento | date : "fullDate" : "+0000" : "es-PE" | titlecase
+          sereno.nacimiento
+            | date : "mediumDate" : "+0000" : "es-PE"
+            | titlecase
         }}
+        ({{ sereno.edad }} años)
         <br />
-        <strong>Sexo: </strong> Masculino
+        <strong>Sexo: </strong> {{ sereno.genero ? "Masculino" : "Femenino" }}
+        <br />
+        <strong>Celular: </strong> {{ sereno.celular }}
+        <br />
+        <strong>Correo: </strong> {{ sereno.correo }}
+        <br />
+        <strong>Direccion: </strong> {{ sereno.direccion }}
       </p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="warn">Regresar</button>
+      <button
+        [routerLink]="['/serenazgo/serenos/list']"
+        mat-raised-button
+        color="warn"
+      >
+        Regresar
+      </button>
+      <button
+        [routerLink]="['/serenazgo/serenos/editar', sereno.id_sereno]"
+        mat-raised-button
+        color="primary"
+      >
+        Editar
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>

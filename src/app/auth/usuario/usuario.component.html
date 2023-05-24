@@ -1,0 +1,149 @@
+<div class="body-2">
+  <div class="flex-login">
+    <mat-card class="card-login">
+      <form
+        autocomplete="off"
+        [formGroup]="registro2"
+        (ngSubmit)="registerUser()"
+      >
+        <mat-card-title>Registrarse</mat-card-title>
+
+        <mat-card-content class="flex-content">
+          <!-- Dni -->
+          <mat-form-field appearance="fill">
+            <mat-label>Ingrese su dni</mat-label>
+            <input matInput maxlength="8" required formControlName="dni" />
+            <mat-error>Debe tener 8 digitos</mat-error>
+          </mat-form-field>
+
+          <!-- Nombres -->
+          <mat-form-field appearance="fill">
+            <mat-label>Ingrese sus nombres</mat-label>
+            <input matInput required formControlName="nombre" />
+          </mat-form-field>
+
+          <!-- Apellidos -->
+          <mat-form-field appearance="fill">
+            <mat-label>Ingrese sus apellidos</mat-label>
+            <input matInput required formControlName="apellido" />
+          </mat-form-field>
+
+          <!-- Nacimiento -->
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha de nacimiento</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              required
+              formControlName="nacimiento"
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker
+              #picker
+              startView="multi-year"
+              [startAt]="startDate"
+            ></mat-datepicker>
+          </mat-form-field>
+
+          <!-- Dirección -->
+          <mat-form-field appearance="fill">
+            <mat-label>Ingrese su dirección</mat-label>
+            <input matInput formControlName="direccion" />
+          </mat-form-field>
+
+          <!-- Correo -->
+          <mat-form-field appearance="fill">
+            <mat-label>Ingrese su correo</mat-label>
+            <input matInput type="email" formControlName="correo" />
+          </mat-form-field>
+
+          <!-- Telefono -->
+          <mat-form-field appearance="fill">
+            <mat-label>Ingrese su celular</mat-label>
+            <input matInput type="number" formControlName="telefono" />
+          </mat-form-field>
+
+          <!-- Sexo -->
+          <mat-radio-group formControlName="sexo">
+            <mat-radio-button
+              style="margin: auto 25px 17px auto"
+              value="masculino"
+              >Masculino</mat-radio-button
+            >
+            <mat-radio-button value="femenino">Femenino</mat-radio-button>
+            <mat-error *ngIf="registro.get('sexo')?.invalid && enviado"
+              >Seleccionar un género</mat-error
+            >
+          </mat-radio-group>
+
+          <!-- Adicional -->
+          <mat-form-field appearance="fill">
+            <mat-label>Información adicional</mat-label>
+            <textarea matInput formControlName="adicional"></textarea>
+          </mat-form-field>
+
+          <!-- Contraseña 1 -->
+          <mat-form-field appearance="fill">
+            <mat-label>Ingresa contraseña</mat-label>
+            <input
+              matInput
+              [type]="hide1 ? 'password' : 'text'"
+              formControlName="contrasena"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide1 = !hide1"
+              [attr.aria-label]="'Ocultar contraseña'"
+              [attr.aria-pressed]="hide1"
+              type="button"
+            >
+              <mat-icon>{{ hide1 ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <!-- Contraseña 2 -->
+          <mat-form-field appearance="fill">
+            <mat-label>Ingresa contraseña</mat-label>
+            <input
+              matInput
+              [type]="hide2 ? 'password' : 'text'"
+              formControlName="contrasena2"
+            />
+            <mat-error
+              *ngIf="registro.get('contrasena2')?.errors?.['passNotMatch']"
+              >Contraseñas no coinciden</mat-error
+            >
+
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide2 = !hide2"
+              [attr.aria-label]="'Ocultar contraseña'"
+              [attr.aria-pressed]="hide2"
+              type="button"
+            >
+              <mat-icon>{{ hide2 ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </mat-card-content>
+
+        <!-- #3F51B5 -->
+        <mat-card-actions align="end">
+          <button type="submit" mat-raised-button color="primary">
+            <!-- [disabled]="registro.invalid" -->
+            Aceptar
+          </button>
+          <button type="button" mat-raised-button color="warn">Cancelar</button>
+        </mat-card-actions>
+        <mat-card-footer>
+          <a routerLink="/auth/login">Inciar sesión</a>
+        </mat-card-footer>
+      </form>
+    </mat-card>
+  </div>
+</div>

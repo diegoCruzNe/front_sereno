@@ -1,0 +1,40 @@
+.body-2 {
+  min-height: 100vh;
+  background-color: #3f51b5;
+  background-image: linear-gradient(1deg, #3f51b5 0%, #ffffff 100%);
+}
+
+.flex-login {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.card-login {
+  margin-top: 3vh;
+  width: 65vw;
+}
+
+.flex-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.flex-content > mat-form-field,
+.flex-content > mat-radio-group {
+  margin: 3px 7px;
+  width: 236px;
+}
+
+a {
+  text-decoration: none;
+  color: #3f51b5;
+  margin-left: 10px;
+}
+
+mat-error {
+  font-size: 0.8rem;
+}

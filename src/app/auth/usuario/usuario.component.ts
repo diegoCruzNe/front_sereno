@@ -36,7 +36,7 @@ export class UsuarioComponent implements OnInit {
       adicional: new FormControl(''),
     },
     {
-      validators: this.passwordMatchValidator,
+      // validators: this.passwordMatchValidator,
     }
   );
 

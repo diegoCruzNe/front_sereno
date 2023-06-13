@@ -11,5 +11,6 @@ import { UnidadPipe } from './pipes/unidad.pipe';
 @NgModule({
   declarations: [HomeComponent, SerenoComponent, UnidadPipe],
   imports: [CommonModule, SerenazgoRoutingModule, MaterialModule],
+
 })
 export class SerenazgoModule {}

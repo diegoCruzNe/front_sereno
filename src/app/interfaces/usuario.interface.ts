@@ -4,7 +4,7 @@ export interface Usuario {
   nombre: string;
   apellido: string;
   nacimiento: string;
-  contrasena: string;
+  contrasena?: string;
   correo?: string;
   direccion?: string;
   telefono?: string;

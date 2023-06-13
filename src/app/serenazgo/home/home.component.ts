@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   logout() {
+    localStorage.removeItem('token');
     this.router.navigateByUrl('/auth');
   }
 }

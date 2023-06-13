@@ -3,7 +3,7 @@
     <mat-card class="card-login">
       <form
         autocomplete="off"
-        [formGroup]="registro2"
+        [formGroup]="registro"
         (ngSubmit)="registerUser()"
       >
         <mat-card-title>Registrarse</mat-card-title>
@@ -25,7 +25,7 @@
           <!-- Apellidos -->
           <mat-form-field appearance="fill">
             <mat-label>Ingrese sus apellidos</mat-label>
-            <input matInput required formControlName="apellido" />
+            <input matInput required formControlName="apellidos" />
           </mat-form-field>
 
           <!-- Nacimiento -->
@@ -64,20 +64,15 @@
           <!-- Telefono -->
           <mat-form-field appearance="fill">
             <mat-label>Ingrese su celular</mat-label>
-            <input matInput type="number" formControlName="telefono" />
+            <input matInput type="text" formControlName="telefono" />
+            <mat-error *ngIf="registro.get('telefono')?.invalid">Ingresar un teléfono válido</mat-error>
           </mat-form-field>
 
           <!-- Sexo -->
           <mat-radio-group formControlName="sexo">
-            <mat-radio-button
-              style="margin: auto 25px 17px auto"
-              value="masculino"
-              >Masculino</mat-radio-button
-            >
+            <mat-radio-button style="margin: auto 25px 17px auto" value="masculino">Masculino</mat-radio-button>
             <mat-radio-button value="femenino">Femenino</mat-radio-button>
-            <mat-error *ngIf="registro.get('sexo')?.invalid && enviado"
-              >Seleccionar un género</mat-error
-            >
+            <mat-error *ngIf="registro.get('sexo')?.invalid && enviado">Seleccionar un género</mat-error>
           </mat-radio-group>
 
           <!-- Adicional -->
@@ -89,19 +84,8 @@
           <!-- Contraseña 1 -->
           <mat-form-field appearance="fill">
             <mat-label>Ingresa contraseña</mat-label>
-            <input
-              matInput
-              [type]="hide1 ? 'password' : 'text'"
-              formControlName="contrasena"
-            />
-            <button
-              mat-icon-button
-              matSuffix
-              (click)="hide1 = !hide1"
-              [attr.aria-label]="'Ocultar contraseña'"
-              [attr.aria-pressed]="hide1"
-              type="button"
-            >
+            <input matInput [type]="hide1 ? 'password' : 'text'" formControlName="contrasena"/>
+            <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Ocultar contraseña'" [attr.aria-pressed]="hide1" type="button">
               <mat-icon>{{ hide1 ? "visibility_off" : "visibility" }}</mat-icon>
             </button>
           </mat-form-field>
@@ -109,14 +93,8 @@
           <!-- Contraseña 2 -->
           <mat-form-field appearance="fill">
             <mat-label>Ingresa contraseña</mat-label>
-            <input
-              matInput
-              [type]="hide2 ? 'password' : 'text'"
-              formControlName="contrasena2"
-            />
-            <mat-error
-              *ngIf="registro.get('contrasena2')?.errors?.['passNotMatch']"
-              >Contraseñas no coinciden</mat-error
+            <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="contrasena2"/>
+            <mat-error *ngIf="registro.get('contrasena2')?.errors?.['passNotMatch']">Contraseñas no coinciden</mat-error
             >
 
             <button

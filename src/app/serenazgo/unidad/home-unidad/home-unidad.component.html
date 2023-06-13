@@ -2,13 +2,11 @@
   <mat-toolbar class="mat-flex">
     <span>Gestión de Unidades</span>
     <span>
-      <button
-        mat-raised-button
-        color="primary"
-        routerLink="/serenazgo/serenos/addedit"
-      >
-        <mat-icon>add</mat-icon> AGREGAR
-      </button>
+
+      <mat-dialog-actions>
+        <button mat-raised-button (click)="openDialog()" color="primary"><mat-icon>add</mat-icon>AGREGAR</button>
+      </mat-dialog-actions>
+
     </span>
   </mat-toolbar>
 </p>

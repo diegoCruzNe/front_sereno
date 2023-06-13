@@ -13,7 +13,7 @@ export class LoginComponent {
   hide = true;
   public loginForm = this.fb.group({
     // /^\d{8}$/
-    dni: ['00000011', [Validators.required, Validators.pattern(/^\d{8}$/)]],
+    dni: ['00000001', [Validators.required, Validators.pattern(/^\d{8}$/)]],
     password: ['123456', [Validators.required]],
   });
 

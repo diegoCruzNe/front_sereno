@@ -1,18 +1,12 @@
 <mat-toolbar color="primary">
-  <span>Seguridad Ciudadana</span>
+  <!-- <span>Seguridad Ciudadana</span> -->
   <span class="example-spacer"></span>
-  <!-- /dashboard/usuarios -->
   <button routerLink="/serenazgo/unidad" mat-button>Unidad</button>
   <button routerLink="/serenazgo/sereno" mat-button>Sereno</button>
   <button routerLink="/serenazgo/serenos" mat-button>Serenos</button>
   <span class="example-spacer"></span>
-  <mat-icon
-    matTooltip="Cerrar sesión"
-    matTooltipPosition="left"
-    style="cursor: pointer"
-    (click)="logout()"
-    >logout</mat-icon
-  >
+  <mat-icon matTooltip="Cerrar sesión" matTooltipPosition="left" style="cursor: pointer"
+    (click)="logout()">logout</mat-icon>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

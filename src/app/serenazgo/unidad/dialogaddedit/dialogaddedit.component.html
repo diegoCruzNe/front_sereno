@@ -1,0 +1,19 @@
+<h2>Crear/guardad unidad</h2>
+<mat-dialog-content>
+    <!-- Placa -->
+    <mat-form-field appearance="fill">
+        <mat-label>Ingrese placa</mat-label>
+        <input matInput placeholder="abc-123" required>
+        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+    </mat-form-field>
+
+    <!-- Estado -->
+    <mat-form-field appearance="fill">
+
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close cdkFocusInitial>Cancelar</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true">Aceptar</button>
+</mat-dialog-actions>

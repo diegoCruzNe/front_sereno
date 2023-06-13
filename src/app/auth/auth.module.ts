@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
@@ -15,5 +15,6 @@ import { UsuarioComponent } from './usuario/usuario.component';
     MaterialModule,
     ReactiveFormsModule,
   ],
+  providers: [DatePipe],
 })
 export class AuthModule {}

@@ -7,9 +7,15 @@ import { ListaUnidadComponent } from './lista-unidad/lista-unidad.component';
 
 import { MaterialModule } from 'src/app/material/material.module';
 import { ImgPipe } from './pipes/img.pipe';
+import { DialogaddeditComponent } from './dialogaddedit/dialogaddedit.component';
 
 @NgModule({
-  declarations: [HomeUnidadComponent, ListaUnidadComponent, ImgPipe],
+  declarations: [
+    HomeUnidadComponent,
+    ListaUnidadComponent,
+    ImgPipe,
+    DialogaddeditComponent,
+  ],
   imports: [CommonModule, UnidadRoutingModule, MaterialModule],
 })
 export class UnidadModule {}

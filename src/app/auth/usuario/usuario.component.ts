@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
@@ -34,7 +34,7 @@ export class UsuarioComponent implements OnInit {
   );
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private loginService: LoginService,
     private datePipe: DatePipe,
     private router: Router
@@ -61,7 +61,7 @@ export class UsuarioComponent implements OnInit {
     }); */
   }
 
-  validarPassword(form: FormGroup) {
+  validarPassword(form: UntypedFormGroup) {
     const pass1 = form.get('contrasena');
     const pass2 = form.get('contrasena2');
 

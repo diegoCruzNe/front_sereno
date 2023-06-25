@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UnidadService } from '../services/unidad.service';
 import Swal from 'sweetalert2';
@@ -11,10 +11,10 @@ import { Unidad } from 'src/app/interfaces/unidad.interface';
   styleUrls: ['./dialogaddedit.component.css'],
 })
 export class DialogaddeditComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private unidadService: UnidadService,
     public dialogRef: MatDialogRef<DialogaddeditComponent>,
     @Inject(MAT_DIALOG_DATA) public data?: any

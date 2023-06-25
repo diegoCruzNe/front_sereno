@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Sereno } from 'src/app/interfaces/sereno.interface';
 import { SerenosService } from '../services/serenos.service';
@@ -13,12 +13,12 @@ import { switchMap } from 'rxjs';
   styleUrls: ['./addedit-serenos.component.css'],
 })
 export class AddeditSerenosComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
   fechaHoy = new Date();
   flag: boolean = false; /* True = Agregar | False = Editar */
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private serenoService: SerenosService,
     private router: Router,
     private datePipe: DatePipe,

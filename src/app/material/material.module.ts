@@ -16,6 +16,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   exports: [
@@ -35,6 +40,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatTooltipModule,
     MatChipsModule,
     MatDialogModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatCheckboxModule,
+    MatListModule,
+    MatMenuModule,
   ],
 })
 export class MaterialModule {}

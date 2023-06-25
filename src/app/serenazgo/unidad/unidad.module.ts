@@ -8,6 +8,7 @@ import { ListaUnidadComponent } from './lista-unidad/lista-unidad.component';
 import { MaterialModule } from 'src/app/material/material.module';
 import { ImgPipe } from './pipes/img.pipe';
 import { DialogaddeditComponent } from './dialogaddedit/dialogaddedit.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,6 @@ import { DialogaddeditComponent } from './dialogaddedit/dialogaddedit.component'
     ImgPipe,
     DialogaddeditComponent,
   ],
-  imports: [CommonModule, UnidadRoutingModule, MaterialModule],
+  imports: [CommonModule, UnidadRoutingModule, MaterialModule, ReactiveFormsModule ],
 })
 export class UnidadModule {}

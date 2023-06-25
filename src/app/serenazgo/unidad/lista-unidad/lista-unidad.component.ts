@@ -1,15 +1,12 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { UnidadService } from '../services/unidad.service';
 import { Unidad } from 'src/app/interfaces/unidad.interface';
-import { Observable } from 'rxjs';
+import { Observable, delay } from 'rxjs';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogaddeditComponent } from '../dialogaddedit/dialogaddedit.component';
+import { DialogaddeditService } from '../services/dialogaddedit.service';
 
 @Component({
   selector: 'app-lista-unidad',
@@ -25,7 +22,9 @@ export class ListaUnidadComponent implements OnInit, OnDestroy {
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
-    private unidadService: UnidadService
+    private unidadService: UnidadService,
+    public dialog: MatDialog,
+    private dialogaddeditService: DialogaddeditService
   ) {}
 
   ngOnInit(): any {
@@ -36,6 +35,18 @@ export class ListaUnidadComponent implements OnInit, OnDestroy {
     if (this.dataSource) {
       this.dataSource.disconnect();
     }
+  }
+
+  openDialog(id: number) {
+    const dialogRef = this.dialog.open(
+      DialogaddeditComponent,
+      this.dialogaddeditService.parametros(id)
+    );
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.listarUnidades();
+      }
+    });
   }
 
   listarUnidades() {

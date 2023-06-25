@@ -13,6 +13,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { EdadPipe } from './pipes/edad.pipe';
 import { VerserenoComponent } from './versereno/versereno.component';
 
+
 @NgModule({
   declarations: [
     HomeSerenosComponent,

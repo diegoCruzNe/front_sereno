@@ -1,19 +1,45 @@
-<h2>Crear/guardad unidad</h2>
-<mat-dialog-content>
-    <!-- Placa -->
-    <mat-form-field appearance="fill">
-        <mat-label>Ingrese placa</mat-label>
-        <input matInput placeholder="abc-123" required>
-        <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
-    </mat-form-field>
+<form [formGroup]="form" autocomplete="off" (ngSubmit)="addEditUnidad()">
+    <h2>{{data.id === undefined ? 'Nueva': 'Editar' }} Unidad</h2>
+    <mat-dialog-content style="height: 330px;">
+        <!-- Placa -->
+        <mat-form-field appearance="fill" style="width: 222px;">
+            <mat-label>Ingrese placa</mat-label>
+            <input matInput placeholder="Ejemplo: abc123" required formControlName="placa">
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+        </mat-form-field>
 
-    <!-- Estado -->
-    <mat-form-field appearance="fill">
+        <!-- Estado -->
+        <div style="margin: 5px auto;">
+            <label style="display: block; margin-bottom: 6px;">Seleccionar estado</label>
+            <mat-radio-group aria-label="Select an option" formControlName="estado">
+                <mat-radio-button value="0">Habilitado</mat-radio-button>
+                <mat-radio-button value="1" style="margin-left: 15px;">Deshabilitado</mat-radio-button>
+            </mat-radio-group>
+        </div>
 
-    </mat-form-field>
-</mat-dialog-content>
+        <!-- Tipo de unidad -->
+        <mat-form-field appearance="fill" style="margin-top: 13px; width: 222px;">
+            <mat-label>Tipo de unidad</mat-label>
+            <mat-select required formControlName="tipo_unidad">
+                <mat-option value="1">Camioneta</mat-option>
+                <mat-option value="2">Auto</mat-option>
+                <mat-option value="3">Motocicleta</mat-option>
+                <mat-option value="4">Camion</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-<mat-dialog-actions align="end">
-    <button mat-raised-button color="warn" mat-dialog-close cdkFocusInitial>Cancelar</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="true">Aceptar</button>
-</mat-dialog-actions>
+        <!-- Descripcion -->
+        <mat-form-field appearance="fill" style="width: 222px;">
+            <mat-label>Información adicional</mat-label>
+            <textarea matInput formControlName="descripcion"></textarea>
+        </mat-form-field>
+        
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="warn" mat-dialog-close cdkFocusInitial>Cancelar</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="true" type="submit" [disabled]="form.invalid">
+            {{data.id === undefined ? 'Aceptar': 'Editar' }}
+        </button>
+    </mat-dialog-actions>
+</form>

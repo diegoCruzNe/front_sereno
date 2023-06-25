@@ -42,7 +42,7 @@
       <p><strong>Descripcion: </strong>{{ unid.descripcion }}</p>
     </mat-card-content>
     <mat-card-actions class="button-flex">
-      <button mat-raised-button color="accent">Editar</button>
+      <button mat-raised-button color="accent" (click)="openDialog(unid.id_unidad)">Editar</button>
     </mat-card-actions>
   </mat-card>
 </div>

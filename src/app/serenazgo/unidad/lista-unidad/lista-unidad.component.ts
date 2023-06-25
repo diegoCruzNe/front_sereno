@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { UnidadService } from '../services/unidad.service';
 import { Unidad } from 'src/app/interfaces/unidad.interface';
 import { Observable, delay } from 'rxjs';
@@ -59,6 +65,7 @@ export class ListaUnidadComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(event: Event) {
+    //TODO: Más filtros
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {

@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 // Fechas español
 import localPy from '@angular/common/locales/es-PE';
 import { registerLocaleData } from '@angular/common';
+
 registerLocaleData(localPy, 'es');
 
 @NgModule({
@@ -20,7 +21,7 @@ registerLocaleData(localPy, 'es');
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatButtonModule,
+    MatButtonModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent],

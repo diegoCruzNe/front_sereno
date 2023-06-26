@@ -9,8 +9,8 @@ import { Sereno } from 'src/app/interfaces/sereno.interface';
 
 import { SerenosService } from '../services/serenos.service';
 
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { Police } from 'src/app/interfaces/police.interface';
 

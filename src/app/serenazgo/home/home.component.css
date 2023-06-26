@@ -36,9 +36,3 @@ h1.example-app-name {
      `<body>` to be our scrolling element for mobile layouts. */
   flex: 1 0 auto;
 }
-
-/* #3f51b5 */
-.item {
-    margin-right: 2rem;
-    margin-left: 1.2rem;
-}

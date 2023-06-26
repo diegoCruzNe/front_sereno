@@ -8,9 +8,9 @@ import {
 import { UnidadService } from '../services/unidad.service';
 import { Unidad } from 'src/app/interfaces/unidad.interface';
 import { Observable, delay } from 'rxjs';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyPaginator as MatPaginator, LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
+import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { DialogaddeditComponent } from '../dialogaddedit/dialogaddedit.component';
 import { DialogaddeditService } from '../services/dialogaddedit.service';
 

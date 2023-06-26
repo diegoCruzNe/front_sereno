@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { DialogaddeditComponent } from '../dialogaddedit/dialogaddedit.component';
 import { DialogaddeditService } from '../services/dialogaddedit.service';
 import { Router } from '@angular/router';

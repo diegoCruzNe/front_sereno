@@ -1,48 +1,39 @@
 <mat-form-field style="width: 92vw; margin: 0 1rem">
   <mat-label>Buscar por:</mat-label>
-  <input
-    (keyup)="applyFilter($event)"
-    matInput
-    placeholder="Ingrese placa o tipo de unidad"
-  />
+  <input (keyup)="applyFilter($event)" matInput placeholder="Ingrese placa o tipo de unidad" />
 </mat-form-field>
 
 <div class="c-flex">
   <!-- Card 1 -->
-  <mat-card
-    *ngFor="let unid of obs | async"
-    class="example-card mat-elevation-z24"
-  >
+  <mat-card *ngFor="let unid of obs | async" class="example-card mat-elevation-z24">
     <mat-card-header>
       <mat-card-title>{{ unid.placa }}</mat-card-title>
-      <mat-card-subtitle *ngIf="unid.fk_tipo_unidad === 1"
-        >Camioneta</mat-card-subtitle
-      >
-      <mat-card-subtitle *ngIf="unid.fk_tipo_unidad === 2"
-        >Auto</mat-card-subtitle
-      >
-      <mat-card-subtitle *ngIf="unid.fk_tipo_unidad === 3"
-        >Motocicleta</mat-card-subtitle
-      >
-      <mat-card-subtitle *ngIf="unid.fk_tipo_unidad === 4"
-        >Camión</mat-card-subtitle
-      >
+      <mat-card-subtitle *ngIf="unid.fk_tipo_unidad === 1">Camioneta</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="unid.fk_tipo_unidad === 2">Auto</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="unid.fk_tipo_unidad === 3">Motocicleta</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="unid.fk_tipo_unidad === 4">Camión</mat-card-subtitle>
     </mat-card-header>
 
     <img mat-card-image src="../../../../assets/unidades/default.jpg" />
 
     <mat-card-content>
       <p>
-        <mat-chip-list>
+        <!-- <mat-chip-list>
           <mat-chip [color]="unid.estado ? 'primary' : 'warn'" selected>{{
             unid.estado ? "Habilitado" : "Deshabilitado"
           }}</mat-chip>
-        </mat-chip-list>
+        </mat-chip-list> -->
+        <mat-chip-listbox >
+          <mat-chip-option selected style="pointer-events: none;" [color]="unid.estado ? 'primary' : 'warn'">
+            {{unid.estado ? "Habilitado" : "Deshabilitado"}}
+          </mat-chip-option>
+        </mat-chip-listbox>
       </p>
       <p><strong>Descripcion: </strong>{{ unid.descripcion }}</p>
     </mat-card-content>
     <mat-card-actions class="button-flex">
       <button mat-raised-button color="accent" (click)="openDialog(unid.id_unidad)">Editar</button>
+
     </mat-card-actions>
   </mat-card>
 </div>

@@ -1,5 +1,6 @@
 <form [formGroup]="form" autocomplete="off" (ngSubmit)="addEditUnidad()">
-    <h2>{{data.id === undefined ? 'Nueva': 'Editar' }} Unidad</h2>
+    <!-- <h2>{{data.id === undefined ? 'Nueva': 'Editar' }} Unidad</h2> -->
+    <h2 mat-dialog-title>{{data.id === undefined ? 'Nueva': 'Editar' }} Unidad</h2>
     <mat-dialog-content style="height: 330px;">
         <!-- Placa -->
         <mat-form-field appearance="fill" style="width: 222px;">

@@ -1,7 +1,7 @@
 <form [formGroup]="form" autocomplete="off" (ngSubmit)="addEditUnidad()">
     <!-- <h2>{{data.id === undefined ? 'Nueva': 'Editar' }} Unidad</h2> -->
     <h2 mat-dialog-title>{{data.id === undefined ? 'Nueva': 'Editar' }} Unidad</h2>
-    <mat-dialog-content style="height: 330px;">
+    <mat-dialog-content style="height: 415px;">
         <!-- Placa -->
         <mat-form-field appearance="fill" style="width: 222px;">
             <mat-label>Ingrese placa</mat-label>
@@ -14,7 +14,7 @@
             <label style="display: block; margin-bottom: 6px;">Seleccionar estado</label>
             <mat-radio-group aria-label="Select an option" formControlName="estado">
                 <mat-radio-button value="0">Habilitado</mat-radio-button>
-                <mat-radio-button value="1" style="margin-left: 15px;">Deshabilitado</mat-radio-button>
+                <mat-radio-button value="1">Deshabilitado</mat-radio-button>
             </mat-radio-group>
         </div>
 

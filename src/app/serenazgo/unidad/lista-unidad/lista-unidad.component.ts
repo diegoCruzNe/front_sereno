@@ -46,7 +46,12 @@ export class ListaUnidadComponent implements OnInit, OnDestroy {
   openDialog(id: number): void {
     const dialogRef = this.dialog.open(
       DialogaddeditComponent,
-      this.dialogaddeditService.parametros(id)
+      {
+        width: '275px',
+        height: '545px',
+        disableClose: true,
+        data: { id },
+      }
     );
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {

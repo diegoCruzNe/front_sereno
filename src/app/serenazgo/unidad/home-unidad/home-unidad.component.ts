@@ -21,8 +21,8 @@ export class HomeUnidadComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog
       .open(DialogaddeditComponent, {
-        width: '300px',
-        height: '470px',
+        width: '275px',
+        height: '545px',
         disableClose: true,
         data: { id: undefined, badge: false },
       })

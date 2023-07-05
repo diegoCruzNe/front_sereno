@@ -1,5 +1,13 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  OnDestroy,
+  HostBinding,
+} from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,21 +17,14 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   mobileQuery!: MediaQueryList;
-
-  fillerNav = Array.from({ length: 50 }, (_, i) => `Nav Item ${i + 1}`);
-
-  fillerContent = Array.from(
-    { length: 50 },
-    () =>
-      `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
-  );
   private _mobileQueryListener!: () => void;
+  toggleControl = new FormControl(false);
+  @HostBinding('class') className = '';
+  darkClassName = 'theme-dark';
+  lightClassName = 'theme-light';
 
   constructor(
+    private overlay: OverlayContainer,
     private router: Router,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher
@@ -33,11 +34,31 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
+  ngOnInit() {
+    //! TODO Almacenar tema en localstorage
+    this.slideToggle();
+    let ls = localStorage.getItem('modoTema');
+  }
+
+  changeTheme(algo: boolean) {
+    this.className = algo ? this.darkClassName : this.lightClassName;
+    if (algo) {
+      this.overlay.getContainerElement().classList.add(this.darkClassName);
+    } else {
+      this.overlay.getContainerElement().classList.remove(this.darkClassName);
+    }
+  }
+
+  slideToggle() {
+    this.toggleControl.valueChanges.subscribe((res: any) => {
+      localStorage.setItem('modoTema', res.toString());
+      this.changeTheme(res);
+    });
+  }
+
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
-
-  ngOnInit(): void {}
 
   logout() {
     localStorage.removeItem('token');

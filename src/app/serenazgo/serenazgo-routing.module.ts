@@ -10,16 +10,9 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'sereno', component: SerenoComponent },
-      {
-        path: 'serenos',
-        loadChildren: () =>
-          import('./serenos/serenos.module').then((m) => m.SerenosModule),
-      },
-      {
-        path: 'unidades',
-        loadChildren: () =>
-          import('./unidad/unidad.module').then((m) => m.UnidadModule),
-      },
+      { path: 'serenos', loadChildren: () => import('./serenos/serenos.module').then((m) => m.SerenosModule)},
+      { path: 'unidades', loadChildren: () => import('./unidad/unidad.module').then((m) => m.UnidadModule)},
+      { path: 'grupos', loadChildren: () => import('./grupos/grupos.module').then((m) => m.GruposModule)},
       { path: '**', redirectTo: 'unidades' },
     ],
   },

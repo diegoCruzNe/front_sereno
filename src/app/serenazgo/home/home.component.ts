@@ -5,23 +5,27 @@ import {
   OnInit,
   ChangeDetectorRef,
   OnDestroy,
-  HostBinding,
+  HostBinding, AfterContentInit
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { faCarSide, faL, faPeopleGroup, faPersonMilitaryPointing } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, AfterContentInit {
   mobileQuery!: MediaQueryList;
   private _mobileQueryListener!: () => void;
   toggleControl = new FormControl(false);
   @HostBinding('class') className = '';
   darkClassName = 'theme-dark';
   lightClassName = 'theme-light';
+  faCarSide = faCarSide;
+  faPeopleGroup = faPeopleGroup;
+  faPersonMilitaryPointing = faPersonMilitaryPointing;
 
   constructor(
     private overlay: OverlayContainer,
@@ -33,16 +37,23 @@ export class HomeComponent implements OnInit, OnDestroy {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
+  
 
   ngOnInit() {
-    //! TODO Almacenar tema en localstorage
-    this.slideToggle();
-    let ls = localStorage.getItem('modoTema');
+    this.slideToggle();  
+    const ls = localStorage.getItem('tema');
+    if (ls === 'true') {
+      //this.className = this.darkClassName;
+      this.overlay.getContainerElement().classList.add(this.darkClassName);
+      this.toggleControl.setValue(true);
+    }
   }
 
-  changeTheme(algo: boolean) {
-    this.className = algo ? this.darkClassName : this.lightClassName;
-    if (algo) {
+  ngAfterContentInit() {}
+
+  changeTheme(val: boolean) {
+    this.className = val ? this.darkClassName : this.lightClassName;
+    if (val) {
       this.overlay.getContainerElement().classList.add(this.darkClassName);
     } else {
       this.overlay.getContainerElement().classList.remove(this.darkClassName);
@@ -51,7 +62,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   slideToggle() {
     this.toggleControl.valueChanges.subscribe((res: any) => {
-      localStorage.setItem('modoTema', res.toString());
+      localStorage.setItem('tema', res);
       this.changeTheme(res);
     });
   }

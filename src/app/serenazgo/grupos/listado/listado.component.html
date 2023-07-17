@@ -1,0 +1,18 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Grupos de Serenos</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field appearance="fill">
+            <mat-label>Filtrar por</mat-label>
+            <mat-select [(value)]="selected">
+                <mat-option>Todos</mat-option>
+                <mat-option value="1">Fechas</mat-option>
+                <mat-option value="2">Sin serenos</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-card-content>
+    <mat-card-content>        
+        <app-tabla [filtrado]=selected></app-tabla>
+    </mat-card-content>
+</mat-card>

@@ -11,6 +11,9 @@ import { UnidadPipe } from './pipes/unidad.pipe';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+
 @NgModule({
   declarations: [HomeComponent, SerenoComponent, UnidadPipe],
   imports: [
@@ -19,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    FontAwesomeModule,
   ],
 })
 export class SerenazgoModule {}

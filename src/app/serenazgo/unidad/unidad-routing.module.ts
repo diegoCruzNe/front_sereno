@@ -5,13 +5,11 @@ import { HomeUnidadComponent } from './home-unidad/home-unidad.component';
 import { ListaUnidadComponent } from './lista-unidad/lista-unidad.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeUnidadComponent,
-    children: [
+  { path: '', component: HomeUnidadComponent, 
+  children: [
       { path: 'list', component: ListaUnidadComponent },
       { path: '**', redirectTo: 'list' },
-    ],
+  ],
   },
 ];
 

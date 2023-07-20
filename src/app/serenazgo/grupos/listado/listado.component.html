@@ -1,8 +1,9 @@
+<router-outlet></router-outlet>
 <mat-card>
     <mat-card-header>
         <mat-card-title>Grupos de Serenos</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content class="flex_grupo">
         <mat-form-field appearance="fill">
             <mat-label>Filtrar por</mat-label>
             <mat-select [(value)]="selected">
@@ -11,6 +12,7 @@
                 <mat-option value="2">Sin serenos</mat-option>
             </mat-select>
         </mat-form-field>
+        <button mat-raised-button color="primary" routerLink="/serenazgo/grupos/nuevo" matTooltip="Agregar nuevo grupo">Nuevo</button>
     </mat-card-content>
     <mat-card-content>        
         <app-tabla [filtrado]=selected></app-tabla>

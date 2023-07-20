@@ -1,0 +1,45 @@
+<form [formGroup]="form" (ngSubmit)="addPatrullaje()" >
+    <mat-card class="card-agregar">
+        <mat-card-header>
+            <mat-card-title>Nuevo Grupo</mat-card-title>
+            <mat-card-subtitle>Ingrese datos</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+
+            <div class="flex-card">
+
+                <!-- Turno -->
+                <!--  -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Seleccionar turno</mat-label>
+                    <mat-select required  (selectionChange)="getTurno($event.value)" formControlName="turno">
+                        <mat-option *ngFor="let turno of arr_turno" [value]=turno.id_turno>{{ turno.turno}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- Unidad -->
+                <!-- [disabled]=badge_select -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Seleccionar unidad</mat-label>
+                    <mat-select required  formControlName="unidad">
+                        <mat-option *ngFor="let unidad of arr_unidades"
+                            [value]="unidad.id_unidad">{{unidad.unidad_list}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- Descripción -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Descripción</mat-label>
+                    <textarea formControlName="descripcion" matInput></textarea>
+                </mat-form-field>
+
+            </div>
+
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-raised-button color="primary" style="margin-right: 9px;" [disabled]="form.invalid" type="submit">Aceptar</button>
+            <button mat-raised-button color="accent" routerLink="/serenazgo/grupos/listado">Cancelar</button>
+        </mat-card-actions>
+
+    </mat-card>
+</form>

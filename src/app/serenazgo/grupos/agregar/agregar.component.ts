@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { TurnosService } from '../services/turnos.service';
 import { UnidadService } from '../services/unidad.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PatrullajeService } from '../services/patrullaje.service';
 
 @Component({
   selector: 'app-agregar',
   templateUrl: './agregar.component.html',
   styleUrls: ['./agregar.component.css'],
 })
+
 export class AgregarComponent implements OnInit {
   arr_turno: any = [];
   // badge_select: boolean = true;
@@ -17,12 +19,13 @@ export class AgregarComponent implements OnInit {
   constructor(
     private turnoService: TurnosService,
     private unidadService: UnidadService,
+    private patrullajeService: PatrullajeService,
     private fb: FormBuilder
   ) {
     this.form = fb.group({
       turno: ['', [Validators.required]],
       unidad: ['', [Validators.required]],
-      descripcion: [''],
+      desc: [''],
     });
   }
 
@@ -38,7 +41,6 @@ export class AgregarComponent implements OnInit {
   }
 
   getTurno(selectedValue: any) {
-    // this.form.get('unidad').reset('');
     this.form.get('unidad')?.reset('');
     if (selectedValue) {
       this.form.get('unidad')?.enable();
@@ -48,7 +50,15 @@ export class AgregarComponent implements OnInit {
       .subscribe((unidades) => (this.arr_unidades = unidades));
   }
 
-  addPatrullaje(){
-    console.log(this.form.value);
+  addPatrullaje() {
+    this.patrullajeService.newPatrullaje(this.form.value).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.form.reset();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

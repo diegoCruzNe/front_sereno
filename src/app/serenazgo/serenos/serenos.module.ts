@@ -12,6 +12,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 
 import { EdadPipe } from './pipes/edad.pipe';
 import { VerserenoComponent } from './versereno/versereno.component';
+import { SelectGroupComponent } from './select-group/select-group.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { VerserenoComponent } from './versereno/versereno.component';
     ListSerenosComponent,
     EdadPipe,
     VerserenoComponent,
+    SelectGroupComponent,
   ],
   imports: [
     CommonModule,

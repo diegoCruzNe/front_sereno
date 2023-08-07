@@ -12,6 +12,7 @@
     margin-top: 20px;
 }
 
+/* < 600 */
 @media only screen and (max-width: 600px) {
     .card-agregar{
         margin-top: 5vh;
@@ -20,6 +21,7 @@
     }
 }
 
+/* 1025 o + */
 @media only screen and (min-width: 1025px) {
     .card-agregar{
         margin-top: 5vh;

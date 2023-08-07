@@ -10,6 +10,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ListadoComponent, TablaComponent, AgregarComponent],
-  imports: [CommonModule, GruposRoutingModule, MaterialModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    GruposRoutingModule,
+    MaterialModule,
+    ReactiveFormsModule
+  ],
 })
 export class GruposModule {}

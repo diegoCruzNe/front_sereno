@@ -4,6 +4,7 @@ import { AddeditSerenosComponent } from './addedit-serenos/addedit-serenos.compo
 import { HomeSerenosComponent } from './home-serenos/home-serenos.component';
 import { ListSerenosComponent } from './list-serenos/list-serenos.component';
 import { VerserenoComponent } from './versereno/versereno.component';
+import { SelectGroupComponent } from './select-group/select-group.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: 'addedit', component: AddeditSerenosComponent },
       { path: 'editar/:id', component: AddeditSerenosComponent },
       { path: 'versereno/:id', component: VerserenoComponent },
+      { path: 'addgroup', component: SelectGroupComponent },
       { path: '**', redirectTo: 'list' },
     ],
   },

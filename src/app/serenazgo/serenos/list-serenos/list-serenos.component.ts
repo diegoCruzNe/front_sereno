@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  OnInit,
-  ViewChild,
-  Input,
-} from '@angular/core';
-import { Sereno } from 'src/app/interfaces/sereno.interface';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
 import { SerenosService } from '../services/serenos.service';
 

@@ -7,7 +7,7 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./home-serenos.component.css'],
 })
 export class HomeSerenosComponent implements OnInit {
-  badge = true;
+  badge: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -16,16 +16,12 @@ export class HomeSerenosComponent implements OnInit {
   }
 
   verRuta() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        event.url === '/serenazgo/serenos/addedit'
-          ? (this.badge = false)
-          : (this.badge = true);
+    this.router.events.subscribe((event: any) => {
+      if (event.routerEvent) {
+        if (event.routerEvent.url === '/serenazgo/serenos/list' || event.routerEvent.urlAfterRedirects === '/serenazgo/serenos/list') {
+          this.badge = true;
+        } else this.badge = false;
       }
-    });
-
-    this.router.url === '/serenazgo/serenos/addedit'
-      ? (this.badge = false)
-      : (this.badge = true);
+    });     
   }
 }

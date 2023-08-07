@@ -3,6 +3,7 @@ import { TurnosService } from '../services/turnos.service';
 import { UnidadService } from '../services/unidad.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PatrullajeService } from '../services/patrullaje.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-agregar',
@@ -53,11 +54,22 @@ export class AgregarComponent implements OnInit {
   addPatrullaje() {
     this.patrullajeService.newPatrullaje(this.form.value).subscribe({
       next: (res) => {
-        console.log(res);
         this.form.reset();
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Patrullaje agregado',
+          showConfirmButton: false,
+          timer: 1500
+        })
       },
       error: (err) => {
         console.log(err);
+        let newUnidades = this.arr_unidades.filter(
+          (unidad: any) => unidad.id_unidad !== this.form.get('unidad')?.value
+        );
+        this.arr_unidades = newUnidades;
+        Swal.fire({ icon: 'error', title: 'Error', text: `${err.error.msg}` });
       },
     });
   }

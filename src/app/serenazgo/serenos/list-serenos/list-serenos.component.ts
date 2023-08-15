@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list-serenos.component.css'],
 })
 export class ListSerenosComponent implements OnInit, AfterViewInit {
-  columnas = ['nombre', 'apellidos', 'genero', 'edad', 'iconos', 'imagen'];
+  columnas = ['nombre', 'apellidos', 'genero', 'edad', 'iconos', 'fk_patrullaje', 'imagen'];
   dataSource: MatTableDataSource<Police>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,6 +32,7 @@ export class ListSerenosComponent implements OnInit, AfterViewInit {
 
   listarSerenos() {
     this.serenoService.getSerenos().subscribe((serenos) => {
+      console.log(serenos);
       this.dataSource.data = serenos;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { PatrullajeService } from '../../grupos/services/patrullaje.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 export interface PatrullajeDetails {
   id_patrullaje: number;
@@ -18,9 +20,11 @@ export interface PatrullajeDetails {
   styleUrls: ['./select-group.component.css'],
 })
 export class SelectGroupComponent implements OnInit {
-  colum_patru: string[] = ['turno', 'unidad', 'tipo_uni', 'num_sere'];
+  colum_patru: string[] = ['num_sere', 'turno', 'placa', 'tipo_unidad'];
   clickedFilas: PatrullajeDetails[] = [];
   patrullajes: MatTableDataSource<PatrullajeDetails>;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private patrullajeService: PatrullajeService) {
     this.patrullajes = new MatTableDataSource();
@@ -35,7 +39,8 @@ export class SelectGroupComponent implements OnInit {
       .getPatrullajeDetalles()
       .subscribe((res_patru: PatrullajeDetails[]) => {
         this.patrullajes.data = res_patru;
-        console.log(res_patru);
+        this.patrullajes.sort = this.sort;
+        this.patrullajes.paginator = this.paginator;
       });
   }
 }

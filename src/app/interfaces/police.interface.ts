@@ -10,4 +10,5 @@ export interface Police {
   nacimiento: string;
   imagen?: string;
   edad: number;
+  fk_patrullaje?: number;
 }

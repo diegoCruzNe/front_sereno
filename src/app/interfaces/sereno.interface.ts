@@ -9,4 +9,5 @@ export interface Sereno {
   direccion?: string;
   nacimiento: string;
   imagen?: string;
+  edad?: number;
 }

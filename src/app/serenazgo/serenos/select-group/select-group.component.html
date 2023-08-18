@@ -3,20 +3,20 @@
         <mat-card-header>
             <mat-card-title-group>
                 <mat-card-title>Nombres y apellidos</mat-card-title>
-                <mat-card-subtitle>Diego Jose Cruz Neciosup</mat-card-subtitle>
-                <mat-card-title>Genero</mat-card-title>
-                <mat-card-subtitle>Masculino</mat-card-subtitle>
+                <mat-card-subtitle>{{sereno?.nombre}} {{sereno?.apellidos}}</mat-card-subtitle>
+                <mat-card-title>Género</mat-card-title>
+                <mat-card-subtitle>{{sereno?.genero ? 'Masculino': 'Femenino'}}</mat-card-subtitle>
                 <mat-card-title>Edad</mat-card-title>
-                <mat-card-subtitle>27 años</mat-card-subtitle>
-                <mat-card-title>Patrullaje</mat-card-title>                
-                <mat-card-subtitle *ngIf="clickedFilas.length > 0">{{ clickedFilas[clickedFilas.length - 1]['placa'] }}</mat-card-subtitle>
-                <mat-card-subtitle *ngIf="clickedFilas.length < 1">Seleccione elemento de la tabla</mat-card-subtitle>                
-                <img mat-card-lg-image src="https://material.angular.io/assets/img/examples/shiba2.jpg">
+                <mat-card-subtitle>{{sereno?.edad}} años</mat-card-subtitle>
+                <mat-card-title>Código de patrullaje</mat-card-title>
+                <mat-card-subtitle *ngIf="clickedFilas.length > 0">{{ clickedFilas[clickedFilas.length - 1]['id_patrullaje'] }}</mat-card-subtitle>
+                <mat-card-subtitle *ngIf="clickedFilas.length < 1">{{ sereno?.fk_patrullaje || 'Sereno sin grupo de patrullaje'}}</mat-card-subtitle>                
+                <img mat-card-lg-image src="{{sereno?.imagen}}">
             </mat-card-title-group>
         </mat-card-header>   
         <mat-card-actions align="end">
-          <button mat-raised-button color="accent" style="margin-right: 10px;" [routerLink]="['/serenazgo/serenos']">Regresar</button>
-          <button mat-raised-button color="primary">Aceptar</button>
+          <button mat-raised-button color="accent" style="margin-right: 10px;" [routerLink]="['/serenazgo/serenos']">Cancelar</button>
+          <button (click)="savePatrullaje(clickedFilas)" mat-raised-button color="primary" [disabled]="clickedFilas.length < 1">Guardar</button>
         </mat-card-actions>    
     </mat-card>
 </div>
@@ -24,6 +24,14 @@
 <br>
 
 <mat-card>
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>
+        {{sereno?.fk_patrullaje ? 'Asignar este sereno a otro grupo de patrullaje' : 'Añadir este sereno a un grupo de patrullaje' }}
+      </mat-card-title>
+      <mat-card-subtitle>Seleccionar fila de la tabla</mat-card-subtitle>
+    </mat-card-title-group>
+  </mat-card-header>
     <mat-card-content>
       <table mat-table [dataSource]="patrullajes" class="mat-elevation-z8 demo-table" matSort>            
      

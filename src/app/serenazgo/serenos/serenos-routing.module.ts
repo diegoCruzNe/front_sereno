@@ -15,7 +15,7 @@ const routes: Routes = [
       { path: 'addedit', component: AddeditSerenosComponent },
       { path: 'editar/:id', component: AddeditSerenosComponent },
       { path: 'versereno/:id', component: VerserenoComponent },
-      { path: 'addgroup', component: SelectGroupComponent },
+      { path: 'addgroup/:id', component: SelectGroupComponent },
       { path: '**', redirectTo: 'list' },
     ],
   },

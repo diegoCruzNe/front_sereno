@@ -32,7 +32,6 @@ export class ListSerenosComponent implements OnInit, AfterViewInit {
 
   listarSerenos() {
     this.serenoService.getSerenos().subscribe((serenos) => {
-      console.log(serenos);
       this.dataSource.data = serenos;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

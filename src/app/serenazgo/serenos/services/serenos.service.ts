@@ -32,4 +32,8 @@ export class SerenosService {
   deleteSerenoById(id: number): Observable<any> {
     return this.http.delete<any>(`${this.url}/serenos/${id}`);
   }
+
+  updateSerenoPatrullaje(fk_patrullaje: number, id_sereno: number) {
+    return this.http.put(`${this.url}/serenos_patrullaje`, { fk_patrullaje, id_sereno });
+  }
 }

@@ -87,7 +87,7 @@ export class AddeditSerenosComponent implements OnInit {
         .pipe(
           switchMap(({ id }) => this.serenoService.updateSerenoById(id, sereno))
         )
-        .subscribe({
+        .subscribe({          
           next: (res) => this.alerta('Sereno editado!'),
           error: (err) => console.log(err),
         });

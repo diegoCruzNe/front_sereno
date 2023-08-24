@@ -4,7 +4,13 @@
     <h1 class="example-app-name">App</h1>
     <span class="example-spacer"></span>
     <mat-slide-toggle matTooltip="Modo oscuro" color="primary" [formControl]="toggleControl"></mat-slide-toggle>
-    <button mat-icon-button matTooltip="Mi Perfil" class="example-icon"><mat-icon>person</mat-icon></button>
+
+    <button mat-icon-button matTooltip="Usuario" [matMenuTriggerFor]="menu" class="example-icon"><mat-icon>person</mat-icon></button>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button mat-menu-item routerLink="/serenazgo/user/profile">Mis datos</button>
+      <button mat-menu-item routerLink="/serenazgo/user/dashboard">Mis estadísticas</button>
+    </mat-menu>
+
     <button mat-icon-button matTooltip="Cerrar Sesión" class="example-icon"(click)="logout()"><mat-icon>logout</mat-icon></button>
   </mat-toolbar>
 

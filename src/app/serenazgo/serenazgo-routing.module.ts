@@ -13,7 +13,8 @@ const routes: Routes = [
       { path: 'serenos', loadChildren: () => import('./serenos/serenos.module').then((m) => m.SerenosModule)},
       { path: 'unidades', loadChildren: () => import('./unidad/unidad.module').then((m) => m.UnidadModule)},
       { path: 'grupos', loadChildren: () => import('./grupos/grupos.module').then((m) => m.GruposModule)},
-      { path: '**', redirectTo: 'unidades' },
+      { path: 'user', loadChildren: () => import('./user/user.module').then((m) => m.UserModule) },
+      { path: '**', redirectTo: 'serenos' },
     ],
   },
 ];

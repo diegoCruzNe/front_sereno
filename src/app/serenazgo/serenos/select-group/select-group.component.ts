@@ -9,6 +9,7 @@ import { SerenosService } from '../services/serenos.service';
 import { Police } from 'src/app/interfaces/police.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { tap } from 'rxjs/operators';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export interface PatrullajeDetails {
   id_patrullaje: number;
@@ -34,13 +35,16 @@ export class SelectGroupComponent implements OnInit {
   sereno!: any;
   form: FormGroup;
   id_sereno!: number;
+  fk_patrullaje: number | null = null;
+
 
   constructor(
     private patrullajeService: PatrullajeService,
     private activatedRoute: ActivatedRoute,
     private serenosService: SerenosService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.patrullajes = new MatTableDataSource();
     this.form = fb.group({
@@ -71,9 +75,10 @@ export class SelectGroupComponent implements OnInit {
         switchMap((par: Params) => this.serenosService.getSerenoById(par['id'])),
       )
       .subscribe({
-        next: (sereno: Police) => {
+        next: (sereno: Police) => {          
           if (!sereno) this.router.navigate(['/serenazgo/serenos/addgroup']);
           else {
+            this.fk_patrullaje = sereno.fk_patrullaje || null;
             // console.log(sereno);
             this.sereno = sereno;
           }
@@ -82,14 +87,35 @@ export class SelectGroupComponent implements OnInit {
   }
 
   savePatrullaje(arreglo: any){
-    // console.log(arreglo[arreglo.length  - 1].id_patrullaje);
-    this.serenosService.updateSerenoPatrullaje(
-      arreglo[arreglo.length - 1].id_patrullaje,
-      this.id_sereno
-    ).subscribe({
-      next: (res) => {
-        // TODO 
-      }
-    });
+    this.serenosService
+      .updateSerenoPatrullaje(
+        arreglo[arreglo.length - 1].id_patrullaje,
+        this.id_sereno
+      )
+      .subscribe({
+        next: (res: any) => {
+          if (res.ok) {
+            this.snackBar.open('Actualizado 😀', 'Ok');
+            setTimeout(() => {
+              this.router.navigate(['/serenazgo/serenos/list']);
+            }, 1000);
+          }
+        },
+      });
+  }
+
+  savePatrullajeSinPatrullaje(){
+    this.serenosService
+      .updateSerenoPatrullaje(null, this.id_sereno)
+      .subscribe({
+        next: (res: any) => {
+          if (res.ok) {
+            this.snackBar.open('Actualizado 😀', 'Ok');
+            setTimeout(() => {
+              this.router.navigate(['/serenazgo/serenos/list']);
+            }, 1000);
+          }
+        },
+      });
   }
 }

@@ -15,6 +15,7 @@
             </mat-card-title-group>
         </mat-card-header>   
         <mat-card-actions align="end">
+          <button (click)="savePatrullajeSinPatrullaje()" matTooltip="Eliminar a este sereno del grupo de patrullaje" *ngIf="fk_patrullaje"mat-raised-button color="warn" style="margin-right: 10px;">Sin grupo</button>
           <button mat-raised-button color="accent" style="margin-right: 10px;" [routerLink]="['/serenazgo/serenos']">Cancelar</button>
           <button (click)="savePatrullaje(clickedFilas)" mat-raised-button color="primary" [disabled]="clickedFilas.length < 1">Guardar</button>
         </mat-card-actions>    

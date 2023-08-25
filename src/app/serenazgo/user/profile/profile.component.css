@@ -1,0 +1,26 @@
+.h1-title {
+    margin-top: 0.7rem;
+    margin-left: 1rem;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.child {
+    min-width: 250px;
+    flex-grow: 0;
+    flex-basis: 47vw;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 400px) {
+    .child {
+        flex-grow: 0;
+        flex-basis: 95vw;
+        margin-bottom: 20px;
+    }
+}

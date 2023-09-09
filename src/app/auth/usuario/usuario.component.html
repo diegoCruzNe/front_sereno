@@ -96,6 +96,7 @@
             <input matInput [type]="hide2 ? 'password' : 'text'" formControlName="contrasena2"/>
             <mat-error *ngIf="registro.get('contrasena2')?.errors?.['passNotMatch']">Contraseñas no coinciden</mat-error
             >
+            <h4>{{registro.get('contrasena2')?.errors?.['passNotMatch']}}</h4>
 
             <button
               mat-icon-button

@@ -2,26 +2,133 @@
 
 <div class="flex">
   <mat-card class="child">
-    <mat-card-header>
-      <mat-card-title>Datos Personales</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <h4>Contenido...</h4>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>Editar</button>
-    </mat-card-actions>
+    <form [formGroup]="formulario" (ngSubmit)="updateProfile()">
+
+
+      <mat-card-header>
+        <mat-card-title>Datos Personales</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div class="flex-form">
+
+          <!-- Dni -->
+          <mat-form-field class="flex-form-clid">
+            <mat-label>Dni</mat-label>
+            <input matInput placeholder="Dni" formControlName="dni">
+            <mat-icon matSuffix>contact_mail</mat-icon>
+          </mat-form-field>
+
+          <!-- Nombre -->
+          <mat-form-field class="flex-form-clid">
+            <mat-label>Nombres</mat-label>
+            <input matInput placeholder="Nombres" formControlName="nombre">
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+
+          <!-- Apellidos -->
+          <mat-form-field class="flex-form-clid">
+            <mat-label>Apellidos</mat-label>
+            <input matInput placeholder="Apellidos" formControlName="apellidos">
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+
+          <!-- Correo -->
+          <mat-form-field class="flex-form-clid">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="correo">
+            <mat-icon matSuffix>alternate_email</mat-icon>
+          </mat-form-field>
+
+          <!-- Nacimiento -->
+          <mat-form-field class="flex-form-clid">
+            <mat-label>Fecha de nacimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="nacimiento">
+            <mat-hint>DD/MM/AAAA</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <!-- Dirección -->
+          <mat-form-field class="flex-form-clid">
+            <mat-label>Dirección</mat-label>
+            <input matInput placeholder="Dirección" formControlName="direccion">
+            <mat-icon matSuffix>home</mat-icon>
+          </mat-form-field>
+
+          <!-- Genero -->
+          <mat-radio-group class="flex-form-clid" formControlName="sexo">
+            <mat-radio-button style="margin: auto 25px 17px auto" value="0">Masculino</mat-radio-button>
+            <mat-radio-button value="1">Femenino</mat-radio-button>
+          </mat-radio-group>
+
+          <!-- Telefono -->
+          <mat-form-field class="flex-form-clid">
+            <mat-label>Celular</mat-label>
+            <input matInput placeholder="Celular" formControlName="telefono">
+            <mat-icon matSuffix>call</mat-icon>
+          </mat-form-field>
+
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions align="end" style="margin-right: 15px;">
+        <button *ngIf="badgeEdit" mat-raised-button color="primary" (click)="edit()" mat-button
+          type="button">Editar</button>
+        <button *ngIf="!badgeEdit" mat-raised-button color="accent" (click)="save()" mat-button
+          type="submit">Guardar</button>
+      </mat-card-actions>
+    </form>
   </mat-card>
 
   <mat-card class="child">
-    <mat-card-header>
-      <mat-card-title>Datos Personales</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <h4>Contenido...</h4>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>Editar</button>
-    </mat-card-actions>
+    <form [formGroup]="formPass" (ngSubmit)="updatePass()">
+
+
+      <mat-card-header>
+        <mat-card-title>Foto de perfil</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="flex-img">
+        <img class="flex-img-child" *ngIf="image_user" [src]="'assets/users/' + image_user">
+        <mat-spinner *ngIf="!image_user"></mat-spinner>
+      </mat-card-content>
+      <mat-card-header>
+        <mat-card-title>Cambiar contraseña</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+
+          <mat-form-field appearance="fill" style="min-width: 95%;">
+            <mat-label>Contraseña actual</mat-label>
+            <input formControlName="oldPass" matInput type="password">
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="fill" style="min-width: 95%;">
+            <mat-label>Contraseña nueva</mat-label>
+            <input formControlName="newPass" matInput type="password">
+            <mat-hint *ngIf="formPass.get('newPass')?.hasError('minlength')">Contraseña debe ser mayor a 6 digitos</mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill" style="min-width: 95%;">
+            <mat-label>Repetir contraseña</mat-label>
+            <input formControlName="confirmPass" matInput type="password">
+            <mat-error *ngIf="formPass.get('confirmPass')?.errors?.['dontMatch']" >Contraseñas deben ser iguales</mat-error>
+            <!-- <mat-error *ngIf="!formPass.errors?.['dontMatch'] ? true : false">Error</mat-error> -->
+            <!-- <mat-hint *ngIf="formPass.get('confirmPass')?.invalid">error2</mat-hint> -->
+            <mat-hint *ngIf="formPass.errors?.['dontMatch']">Contraseñas deben ser iguales</mat-hint>
+          </mat-form-field>
+        </p>
+
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button style="margin-right: 24px;" *ngIf="badgePass" mat-raised-button color="primary" (click)="edit_pass()"
+          mat-button type="button">Cambiar contraseña</button>
+        <button style="margin-right: 24px;" *ngIf="!badgePass" mat-raised-button color="accent"
+          mat-button type="submit">Guardar</button>
+      </mat-card-actions>
+    </form>
   </mat-card>
 </div>

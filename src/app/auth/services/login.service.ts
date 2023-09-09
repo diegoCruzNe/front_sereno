@@ -34,10 +34,16 @@ export class LoginService {
           return value.ok;
         }),
         catchError((res) => {
-          console.log(res);
           return of(false);
         })
       );
+  }
+
+  getDataUser(): Observable<RenewUsuario> {
+    return this.http.get<RenewUsuario> (
+      `${base_url}/auth`, 
+      { headers: { 'x-token': this.token || '' }}
+    )
   }
 
   crearUsuario(objUsuario: Usuario) {

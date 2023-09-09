@@ -17,10 +17,34 @@
     margin-bottom: 20px;
 }
 
-@media screen and (max-width: 400px) {
+.flex-form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.flex-form-clid {
+    margin-right: 9px;
+    flex-grow: 1;
+}
+
+@media screen and (max-width: 500px) {
     .child {
         flex-grow: 0;
         flex-basis: 95vw;
         margin-bottom: 20px;
     }
 }
+
+.flex-img {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.flex-img-child {
+    max-width: 100%;
+}
+

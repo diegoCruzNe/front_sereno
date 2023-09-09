@@ -5,6 +5,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { ProfileComponent } from './profile/profile.component';
 import { MydashboardComponent } from './mydashboard/mydashboard.component';
 import { MaterialModule } from 'src/app/material/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MaterialModule } from 'src/app/material/material.module';
   imports: [
     CommonModule,
     UserRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class UserModule { }

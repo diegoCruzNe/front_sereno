@@ -65,8 +65,11 @@ export class UsuarioComponent implements OnInit {
     const pass1 = form.get('contrasena');
     const pass2 = form.get('contrasena2');
 
-    if (pass1?.value === pass2?.value) {pass2?.setErrors(null)} 
-    else {pass2?.setErrors({ passNotMatch: true })}
+    if (pass1?.value === pass2?.value) {
+      pass2?.setErrors(null);
+    } else {
+      pass2?.setErrors({ passNotMatch: true });
+    }
   }
 
   alertaOk(mensaje: string) {

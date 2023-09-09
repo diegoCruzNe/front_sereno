@@ -23,6 +23,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   exports: [
@@ -48,7 +49,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatListModule,
     MatMenuModule,
     MatSlideToggleModule,
-    MatSnackBarModule,
+    MatSnackBarModule, MatProgressSpinnerModule
     
   ],
 })

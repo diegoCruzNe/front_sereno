@@ -127,7 +127,7 @@
         <button style="margin-right: 24px;" *ngIf="badgePass" mat-raised-button color="primary" (click)="edit_pass()"
           mat-button type="button">Cambiar contraseña</button>
         <button style="margin-right: 24px;" *ngIf="!badgePass" mat-raised-button color="accent"
-          mat-button type="submit">Guardar</button>
+          mat-button type="submit"[disabled]="formPass.invalid" >Guardar</button>
       </mat-card-actions>
     </form>
   </mat-card>

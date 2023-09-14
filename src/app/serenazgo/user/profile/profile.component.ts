@@ -52,9 +52,9 @@ export class ProfileComponent implements OnInit {
         newPass: ['', [Validators.required, Validators.minLength(6)]],
         confirmPass: ['', [Validators.required]],
       },
-      { 
-        validators: this.controlValuesAreEqual('newPass', 'confirmPass')
-      } 
+      {
+        validators: this.controlValuesAreEqual('newPass', 'confirmPass'),
+      }
     );
   }
 
@@ -132,13 +132,28 @@ export class ProfileComponent implements OnInit {
   }
 
   updatePass() {
-    //if (this.formPass.invalid) return;
+    if (this.formPass.invalid) return;
     this.badgePass = true;
     this.formPass.disable();
-    console.log(this.formPass)
+    this.usuarioService.changeMyPassword(this.formPass.value).subscribe({
+      next: (res: any) => {
+        this.snackBar.open('Contraseña Actualizada 😀', 'Ok');
+      },
+      error: (err) => {
+        this.snackBar.open('Ocurrió un error ☹️', 'Ok');
+        console.log(err);
+      },
+    });
   }
 
-  controlValuesAreEqual(controlNameA: string, controlNameB: string): ValidatorFn {
+  openSnackBar(message: String, action: String) {
+    this.snackBar.open('hola', 'hola');
+  }
+
+  controlValuesAreEqual(
+    controlNameA: string,
+    controlNameB: string
+  ): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const formGroup = control as FormGroup;
       const valueControlA = formGroup.get(controlNameA)?.value;

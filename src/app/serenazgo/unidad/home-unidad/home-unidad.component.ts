@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { DialogaddeditComponent } from '../dialogaddedit/dialogaddedit.component';
 import { DialogaddeditService } from '../services/dialogaddedit.service';
 import { Router } from '@angular/router';
@@ -27,21 +31,21 @@ export class HomeUnidadComponent implements OnInit {
         data: { id: undefined, badge: false },
       })
       .afterClosed()
-      .subscribe(res =>{
+      .subscribe((res) => {
         if (res) {
+          console.log('❤️');
           this.recargarOutlet();
-          return
+          return;
         }
       });
-     //dialogRef.afterClosed().subscribe((res) => {});
+    //dialogRef.afterClosed().subscribe((res) => {});
   }
 
   recargarOutlet() {
     setTimeout(() => {
       this.router
-      .navigateByUrl('/serenazgo/serenos/list', { skipLocationChange: true }) 
-      .then(() => this.router.navigate(['/serenazgo/unidades/list']));
+        .navigateByUrl('/serenazgo/serenos/list', { skipLocationChange: true })
+        .then(() => this.router.navigate(['/serenazgo/unidades/list']));
     }, 1900);
-    
   }
 }

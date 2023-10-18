@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { LoginService } from 'src/app/auth/services/login.service';
 import { RenewUsuario } from 'src/app/interfaces/renewToken.interface';
 import { Usuario } from 'src/app/interfaces/usuario.interface';
@@ -33,7 +34,8 @@ export class ProfileComponent implements OnInit {
     private fb: FormBuilder,
     private usuarioService: UsuariosService,
     private snackBar: MatSnackBar,
-    private customValidation: CustomvalidationService
+    private customValidation: CustomvalidationService,
+    private router: Router
   ) {
     this.formulario = fb.group({
       dni: ['', [Validators.required]],
@@ -80,7 +82,7 @@ export class ProfileComponent implements OnInit {
         ),
         direccion: res.usuario.direccion,
         sexo: res.usuario.sexo === 'femenino' ? '1' : '0',
-        telefono: res.usuario.telefono,
+        telefono: res.usuario.telefono,  
       });
     });
   }
@@ -99,8 +101,7 @@ export class ProfileComponent implements OnInit {
   }
 
   updateProfile() {
-    const { dni, nombre, apellidos, sexo, telefono, correo, direccion } =
-      this.formulario.value;
+    const { dni, nombre, apellidos, sexo, telefono, correo, direccion } = this.formulario.value;
     const fecha = new Date(this.formulario.value.nacimiento);
 
     const usuario = {
@@ -108,9 +109,7 @@ export class ProfileComponent implements OnInit {
       nombre,
       apellidos,
       correo,
-      nacimiento: new Date(
-        fecha.getTime() + Math.abs(fecha.getTimezoneOffset() * 60000)
-      ),
+      nacimiento: `${fecha.getFullYear()}-${fecha.getMonth() + 1}-${fecha.getDate()}`,
       direccion,
       sexo: sexo === '0' ? 'masculino' : 'femenino',
       telefono,
@@ -120,8 +119,10 @@ export class ProfileComponent implements OnInit {
       .updateMyProfile(usuario, this.id_user)
       .subscribe((res: any) => {
         if (res.ok) {
-          this.snackBar.open('Actualizado 😀', 'Ok');
-          this.getDataUser();
+          this.snackBar.open('Actualizado 😀', 'Ok', {
+            duration: 2000
+          });
+          this.getDataUser();  
         }
       });
   }
@@ -137,18 +138,27 @@ export class ProfileComponent implements OnInit {
     this.formPass.disable();
     this.usuarioService.changeMyPassword(this.formPass.value).subscribe({
       next: (res: any) => {
-        this.snackBar.open('Contraseña Actualizada 😀', 'Ok');
+        this.snackBar.open('Contraseña Actualizada 😀', 'Ok', {
+          duration: 3000,
+        });
+        this.formPass.reset();
+        localStorage.removeItem('token');
+        setTimeout(() => {
+          this.router.navigate(['auth/login']);
+        }, 1000);        
       },
       error: (err) => {
-        this.snackBar.open('Ocurrió un error ☹️', 'Ok');
+        this.snackBar.open('Ocurrió un error ☹️', 'Ok', {
+          duration: 2000
+        });
         console.log(err);
       },
     });
   }
 
-  openSnackBar(message: String, action: String) {
+  /* openSnackBar(message: String, action: String) {
     this.snackBar.open('hola', 'hola');
-  }
+  } */
 
   controlValuesAreEqual(
     controlNameA: string,
@@ -165,5 +175,11 @@ export class ProfileComponent implements OnInit {
         return { dontMatch: true };
       }
     };
+  }
+
+  cancelarButton() {
+    this.badgePass = !this.badgePass
+    this.formPass.reset();
+    this.formPass.disable();
   }
 }

@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogaddeditComponent } from '../dialogaddedit/dialogaddedit.component';
 import { DialogaddeditService } from '../services/dialogaddedit.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-unidad',
@@ -27,6 +28,7 @@ export class ListaUnidadComponent implements OnInit, OnDestroy {
   accent: string = 'accent';
 
   constructor(
+    private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
     private unidadService: UnidadService,
     public dialog: MatDialog,
@@ -55,7 +57,9 @@ export class ListaUnidadComponent implements OnInit, OnDestroy {
     );
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        this.listarUnidades();
+        setTimeout(() => {
+          this.listarUnidades();
+        }, 1000);
       }
     });
   }
@@ -70,7 +74,7 @@ export class ListaUnidadComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(event: Event) {
-    //TODO: Más filtros
+    // todo Más filtros
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {

@@ -124,10 +124,11 @@
 
       </mat-card-content>
       <mat-card-actions align="end">
-        <button style="margin-right: 24px;" *ngIf="badgePass" mat-raised-button color="primary" (click)="edit_pass()"
-          mat-button type="button">Cambiar contraseña</button>
-        <button style="margin-right: 24px;" *ngIf="!badgePass" mat-raised-button color="accent"
-          mat-button type="submit"[disabled]="formPass.invalid" >Guardar</button>
+        <button style="margin-right: 7px;" *ngIf="!badgePass" mat-raised-button type="button" (click)="cancelarButton()" >Cancelar</button>
+        <button style="margin-right: 24px;" *ngIf="badgePass" mat-raised-button color="primary" (click)="edit_pass()" mat-button
+          type="button">Cambiar contraseña</button>
+        <button style="margin-right: 24px;" *ngIf="!badgePass" mat-raised-button color="accent" mat-button type="submit"
+          [disabled]="formPass.invalid">Guardar</button>
       </mat-card-actions>
     </form>
   </mat-card>

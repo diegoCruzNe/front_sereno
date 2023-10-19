@@ -67,7 +67,7 @@
       <ng-container matColumnDef="imagen">
         <th mat-header-cell *matHeaderCellDef>Imagen</th>
         <td mat-cell *matCellDef="let element">
-          <img class="imgsereno" [src]="element.imagen" />
+          <img class="imgsereno" [src]="element.imagen ? 'assets/users/'+element.imagen : 'assets/users/user.png'" />
         </td>
       </ng-container>
 

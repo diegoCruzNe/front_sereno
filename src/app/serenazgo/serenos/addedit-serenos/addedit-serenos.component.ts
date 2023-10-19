@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Sereno } from 'src/app/interfaces/sereno.interface';
 import { SerenosService } from '../services/serenos.service';
@@ -44,14 +48,14 @@ export class AddeditSerenosComponent implements OnInit {
 
     this.activatedRoute.params
       .pipe(switchMap(({ id }) => this.serenoService.getSerenoById(id)))
-      .subscribe((sereno) => {
+      .subscribe((sereno: any) => {
         const fecha = new Date(sereno.nacimiento);
 
         this.form.patchValue({
           dni: sereno.dni,
           nombre: sereno.nombre,
           apellidos: sereno.apellidos,
-          genero: sereno.genero === true ? '1' : '0',
+          genero: sereno.genero === 1 ? '1' : '0',
           celular: sereno.celular,
           correo: sereno.correo,
           direccion: sereno.direccion,
@@ -87,7 +91,7 @@ export class AddeditSerenosComponent implements OnInit {
         .pipe(
           switchMap(({ id }) => this.serenoService.updateSerenoById(id, sereno))
         )
-        .subscribe({          
+        .subscribe({
           next: (res) => this.alerta('Sereno editado!'),
           error: (err) => console.log(err),
         });

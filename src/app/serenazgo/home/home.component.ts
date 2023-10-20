@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterContentInit {
     media: MediaMatcher,
     private loginService: LoginService
   ) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.mobileQuery = media.matchMedia('(max-width: 800px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }

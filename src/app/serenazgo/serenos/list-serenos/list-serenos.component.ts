@@ -2,9 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
 import { SerenosService } from '../services/serenos.service';
 
-import { MatLegacyPaginator as MatPaginator } from '@angular/material/legacy-paginator';
-import { MatLegacyTableDataSource as MatTableDataSource } from '@angular/material/legacy-table';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Police } from 'src/app/interfaces/police.interface';
 
 import Swal from 'sweetalert2';
@@ -15,7 +15,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list-serenos.component.css'],
 })
 export class ListSerenosComponent implements OnInit, AfterViewInit {
-  columnas = ['nombre', 'apellidos', 'genero', 'edad', 'iconos', 'fk_patrullaje', 'imagen'];
+  columnas = [
+    'nombre',
+    'apellidos',
+    'genero',
+    'edad',
+    'iconos',
+    'fk_patrullaje',
+    'imagen',
+  ];
   dataSource: MatTableDataSource<Police>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

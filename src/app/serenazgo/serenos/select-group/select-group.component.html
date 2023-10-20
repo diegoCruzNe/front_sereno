@@ -11,7 +11,7 @@
                 <mat-card-title>Código de patrullaje</mat-card-title>
                 <mat-card-subtitle *ngIf="clickedFilas.length > 0">{{ clickedFilas[clickedFilas.length - 1]['id_patrullaje'] }}</mat-card-subtitle>
                 <mat-card-subtitle *ngIf="clickedFilas.length < 1">{{ sereno?.fk_patrullaje || 'Sereno sin grupo de patrullaje'}}</mat-card-subtitle>                
-                <img mat-card-lg-image src="{{sereno?.imagen}}">
+                <img mat-card-lg-image src="assets/users/{{sereno?.imagen || 'user.png' }}">
             </mat-card-title-group>
         </mat-card-header>   
         <mat-card-actions align="end">

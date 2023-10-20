@@ -26,7 +26,7 @@ export class LoginComponent {
   login() {
     this.loginService.login(this.loginForm.value).subscribe({
       next: (resp) => {
-        console.log('resp->',resp)
+        // console.log('resp->',resp)
         this.router.navigateByUrl('/serenazgo');
       },
       error: (err) => {

@@ -21,6 +21,8 @@
         <a mat-list-item routerLink="/serenazgo/unidades/list"><fa-icon [icon]="faCarSide" size="lg"></fa-icon> Unidad</a>
         <a mat-list-item routerLink="/serenazgo/serenos"><fa-icon [icon]="faPersonMilitaryPointing" size="lg"></fa-icon> Serenos</a>
         <a mat-list-item routerLink="/serenazgo/grupos/listado"><fa-icon [icon]="faPeopleGroup" size="lg"></fa-icon> Grupos</a>
+        <!-- Item Gestión de usuarios (solo visible para usuario root y administrador) -->  
+        <a *ngIf="permissionsUser" mat-list-item routerLink="/serenazgo/usuarios/home"><fa-icon [icon]="faUsersGear" size="lg"></fa-icon> Usuarios</a>
       </mat-nav-list>
     </mat-sidenav>
 

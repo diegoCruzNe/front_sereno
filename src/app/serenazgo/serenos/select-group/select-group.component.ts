@@ -61,7 +61,6 @@ export class SelectGroupComponent implements OnInit {
     this.patrullajeService
       .getPatrullajeDetalles()
       .subscribe((res_patru: PatrullajeDetails[]) => {
-        // console.log(res_patru)
         this.patrullajes.data = res_patru;
         this.patrullajes.sort = this.sort;
         this.patrullajes.paginator = this.paginator;
@@ -79,7 +78,6 @@ export class SelectGroupComponent implements OnInit {
           if (!sereno) this.router.navigate(['/serenazgo/serenos/addgroup']);
           else {
             this.fk_patrullaje = sereno.fk_patrullaje || null;
-            // console.log(sereno);
             this.sereno = sereno;
           }
         },

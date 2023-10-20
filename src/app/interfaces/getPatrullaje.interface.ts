@@ -5,4 +5,5 @@ export interface getPatrullaje {
   placa: string;
   tipo_unidad: string;
   estado: string;
+  num_sere: number;
 }

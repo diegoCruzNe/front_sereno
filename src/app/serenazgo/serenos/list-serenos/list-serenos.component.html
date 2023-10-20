@@ -58,7 +58,7 @@
         <td mat-cell *matCellDef="let element; let i = index">
           <button mat-icon-button color="accent" matTooltip="Editar" [routerLink]="['/serenazgo/serenos/editar', element.id_sereno]"><mat-icon>edit</mat-icon></button>
           <button mat-icon-button color="primary" matTooltip="Ver más" [routerLink]="['/serenazgo/serenos/versereno', element.id_sereno]"><mat-icon>info</mat-icon></button>
-          <button mat-icon-button color="accent" matTooltip="Añadir a grupo" [routerLink]="['/serenazgo/serenos/addgroup', element.id_sereno]"><mat-icon>group_add</mat-icon></button>
+          <button mat-icon-button color="accent" matTooltip="Editar patrullaje" [routerLink]="['/serenazgo/serenos/addgroup', element.id_sereno]"><mat-icon>group_add</mat-icon></button>
           <button *ngIf="!element.fk_patrullaje" mat-icon-button color="warn" matTooltip="Eliminar" (click)="eliminar(element.id_sereno)"><mat-icon>delete</mat-icon></button>
         </td>
       </ng-container>

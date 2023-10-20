@@ -9,7 +9,8 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCarSide, faL, faPeopleGroup, faPersonMilitaryPointing } from '@fortawesome/free-solid-svg-icons';
+import { faCarSide, faPeopleGroup, faPersonMilitaryPointing, faUsersGear } from '@fortawesome/free-solid-svg-icons';
+import { LoginService } from 'src/app/auth/services/login.service';
 
 @Component({
   selector: 'app-home',
@@ -24,29 +25,40 @@ export class HomeComponent implements OnInit, OnDestroy, AfterContentInit {
   darkClassName = 'theme-dark';
   lightClassName = 'theme-light';
   faCarSide = faCarSide;
+  faUsersGear = faUsersGear;
   faPeopleGroup = faPeopleGroup;
   faPersonMilitaryPointing = faPersonMilitaryPointing;
+  permissionsUser: boolean = false;
 
   constructor(
     private overlay: OverlayContainer,
     private router: Router,
     changeDetectorRef: ChangeDetectorRef,
-    media: MediaMatcher
+    media: MediaMatcher,
+    private loginService: LoginService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
-  
 
   ngOnInit() {
-    this.slideToggle();  
+    this.getUserType();
+    this.slideToggle();
     const ls = localStorage.getItem('tema');
     if (ls === 'true') {
       //this.className = this.darkClassName;
       this.overlay.getContainerElement().classList.add(this.darkClassName);
       this.toggleControl.setValue(true);
     }
+  }
+
+  getUserType() {
+    this.loginService.getDataUser().subscribe((res: any) => {
+      if (res.usuario.fk_tipo_us === 1 || res.usuario.fk_tipo_us === 2) {
+        this.permissionsUser = true;
+      } 
+    });
   }
 
   ngAfterContentInit() {}

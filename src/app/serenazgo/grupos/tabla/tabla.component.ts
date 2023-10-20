@@ -15,7 +15,7 @@ export class TablaComponent implements OnInit, OnChanges {
   fuentaData: MatTableDataSource<getPatrullaje>;
   @ViewChild(MatPaginator) paginacion!: MatPaginator;
   @ViewChild(MatSort) ordenar!: MatSort;
-  columnas = ['tipo_unidad', 'placa', 'descripcion', 'turno', 'estado', 'num_ser'];
+  columnas = ['tipo_unidad', 'placa', 'descripcion', 'turno','num_sere', 'estado', ];
 
   constructor(private patrullajeService: PatrullajeService) {
     this.fuentaData = new MatTableDataSource();
@@ -28,7 +28,7 @@ export class TablaComponent implements OnInit, OnChanges {
     else if (changes.filtrado.currentValue === '2') {} 
     else {
       this.patrullajeService.getPatrullaje().subscribe({
-        next: (listPatru: getPatrullaje[]) => {
+        next: (listPatru: any) => {
           this.fuentaData.data = listPatru;
           this.fuentaData.paginator = this.paginacion;
           this.fuentaData.sort = this.ordenar;

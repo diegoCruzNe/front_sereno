@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {  Component, OnInit, ViewChild } from '@angular/core';
 
 import { SerenosService } from '../services/serenos.service';
 
@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   templateUrl: './list-serenos.component.html',
   styleUrls: ['./list-serenos.component.css'],
 })
-export class ListSerenosComponent implements OnInit, AfterViewInit {
+export class ListSerenosComponent implements OnInit {
   columnas = [
     'nombre',
     'apellidos',
@@ -36,7 +36,6 @@ export class ListSerenosComponent implements OnInit, AfterViewInit {
     this.listarSerenos();
   }
 
-  ngAfterViewInit(): void {}
 
   listarSerenos() {
     this.serenoService.getSerenos().subscribe((serenos) => {

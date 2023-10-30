@@ -2,11 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ListUsersComponent } from './list-users/list-users.component';
-
-/* const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: '**', redirectTo: 'home' },
-]; */
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 const routes: Routes = [
   {
@@ -14,9 +10,10 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'list', component: ListUsersComponent },
-      { path: '**', redirectTo: 'list' }
-    ]
-  }
+      { path: 'edituser', component: EditUserComponent },
+      { path: '**', redirectTo: 'list' },
+    ],
+  },
 ];
 
 @NgModule({

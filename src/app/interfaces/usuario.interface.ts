@@ -11,5 +11,6 @@ export interface Usuario {
   sexo: string;
   adicional?: string;
   foto?: string;
-  tipo_us?: number;
+  fk_tipo_us?: number;
+  estado?: boolean
 }

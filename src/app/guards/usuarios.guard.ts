@@ -16,7 +16,7 @@ import { map, tap } from 'rxjs/operators';
 export class UsuariosGuard implements CanActivate {
   constructor(private loginService: LoginService, private router: Router) {}
 
-  canActivate(): any {
+  /* canActivate(): any {
     return this.loginService
       .getDataUser()
       .pipe(map((res: any) => res.usuario.fk_tipo_us))
@@ -27,5 +27,12 @@ export class UsuariosGuard implements CanActivate {
           this.router.navigateByUrl('/serenazgo/');
         }
       });
+  } */
+
+  canActivate(): Observable<boolean> {
+    return this.loginService.getDataUser().pipe(
+      map((res: any) => res.usuario.fk_tipo_us),
+      map((res) => res === 1 || res === 2)
+    );
   }
 }

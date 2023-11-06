@@ -1,0 +1,51 @@
+.flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.flex-child {
+    flex-grow: 1;
+    margin-right: 9px;
+}
+
+.div-up-radio {
+    width: 50%;
+}
+
+.up-radio {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+@media screen and (max-width: 600px) {
+    .mat-card {
+        margin: 0 0;
+    }
+}
+
+
+@media screen and (min-width: 601px) and (max-width: 992px) {
+    .mat-card {
+        margin: 0 1rem;
+    }
+}
+
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .mat-card {
+        margin: 0 10vw;
+    }
+}
+
+
+@media screen and (min-width: 1201px) {
+    .mat-card {
+        margin: 0 15vw;
+    }
+}

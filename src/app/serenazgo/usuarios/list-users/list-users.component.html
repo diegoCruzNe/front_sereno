@@ -51,8 +51,8 @@
             <ng-container matColumnDef="iconos">
                 <th mat-header-cell *matHeaderCellDef>Acción</th>
                 <td mat-cell *matCellDef="let element; let i = index">
-                    <button (click)="sendId(element.id_usuario)" *ngIf="element.estado" mat-icon-button
-                        matTooltip="Editar"><mat-icon>edit</mat-icon></button>
+                    <button (click)="sendId(element.id_usuario)" routerLink="/serenazgo/usuarios/edituser" *ngIf="element.estado"
+                        mat-icon-button matTooltip="Editar"><mat-icon>edit</mat-icon></button>
                 </td>
             </ng-container>
 

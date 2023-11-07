@@ -5,9 +5,11 @@ import { SerenosService } from '../services/serenos.service';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { Police } from 'src/app/interfaces/police.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-import Swal from 'sweetalert2';
+import { DialogdeleteserenoComponent } from '../dialogdeletesereno/dialogdeletesereno.component';
 
 @Component({
   selector: 'app-list-serenos',
@@ -28,7 +30,7 @@ export class ListSerenosComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private serenoService: SerenosService) {
+  constructor(private serenoService: SerenosService, public dialog: MatDialog, private snackBar: MatSnackBar,) {
     this.dataSource = new MatTableDataSource();
   }
 
@@ -53,25 +55,20 @@ export class ListSerenosComponent implements OnInit {
     }
   }
 
-  eliminar(id: number) {
-    Swal.fire({
-      title: '¿Está seguro?',
-      text: 'No podrás revertir los cambios',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminar',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        //Swal.fire('Eliminado!', 'El sereno fue eliminado.', 'success');
+  openDialog(id: number) {
+    const dialogRef = this.dialog.open(DialogdeleteserenoComponent, {
+      width: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
         this.serenoService.deleteSerenoById(id).subscribe({
           next: (resp) => {
-            Swal.fire('Eliminado!', 'El sereno fue eliminado.', 'success');
+            this.snackBar.open('Sereno eliminado 👍', 'Ok', { duration: 3000 });
             this.listarSerenos();
           },
           error: (err) => console.error(err),
-        });
+        })
       }
     });
   }

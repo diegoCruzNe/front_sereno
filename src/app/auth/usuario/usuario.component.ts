@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { DatePipe } from '@angular/common';
-import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
 @Component({
@@ -70,15 +69,5 @@ export class UsuarioComponent implements OnInit {
     } else {
       pass2?.setErrors({ passNotMatch: true });
     }
-  }
-
-  alertaOk(mensaje: string) {
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: `${mensaje}`,
-      showConfirmButton: false,
-      timer: 1500,
-    }).then(() => this.router.navigate(['./serenazgo']));
   }
 }

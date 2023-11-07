@@ -13,6 +13,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { EdadPipe } from './pipes/edad.pipe';
 import { VerserenoComponent } from './versereno/versereno.component';
 import { SelectGroupComponent } from './select-group/select-group.component';
+import { DialogdeleteserenoComponent } from './dialogdeletesereno/dialogdeletesereno.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { SelectGroupComponent } from './select-group/select-group.component';
     EdadPipe,
     VerserenoComponent,
     SelectGroupComponent,
+    DialogdeleteserenoComponent,
   ],
   imports: [
     CommonModule,

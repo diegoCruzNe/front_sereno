@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,8 @@ export class LoginComponent {
   constructor(
     private fb: UntypedFormBuilder,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   login() {
@@ -31,7 +32,9 @@ export class LoginComponent {
       },
       error: (err) => {
         console.log(err);
-        Swal.fire('Error', err.error.msg, 'error');
+        this._snackBar.open("Error", "Ok", {
+          duration: 2500
+        });
       },
     });
   }

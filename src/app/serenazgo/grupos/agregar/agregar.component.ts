@@ -3,7 +3,7 @@ import { TurnosService } from '../services/turnos.service';
 import { UnidadService } from '../services/unidad.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PatrullajeService } from '../services/patrullaje.service';
-import Swal from 'sweetalert2';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-agregar',
@@ -21,7 +21,8 @@ export class AgregarComponent implements OnInit {
     private turnoService: TurnosService,
     private unidadService: UnidadService,
     private patrullajeService: PatrullajeService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar,
   ) {
     this.form = fb.group({
       turno: ['', [Validators.required]],
@@ -55,13 +56,9 @@ export class AgregarComponent implements OnInit {
     this.patrullajeService.newPatrullaje(this.form.value).subscribe({
       next: (res) => {
         this.form.reset();
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Patrullaje agregado',
-          showConfirmButton: false,
-          timer: 1500
-        })
+        this.snackBar.open('Patrullaje agregado 👍', 'Ok', {
+          duration: 3000,
+        });
       },
       error: (err) => {
         console.log(err);
@@ -69,7 +66,7 @@ export class AgregarComponent implements OnInit {
           (unidad: any) => unidad.id_unidad !== this.form.get('unidad')?.value
         );
         this.arr_unidades = newUnidades;
-        Swal.fire({ icon: 'error', title: 'Error', text: `${err.error.msg}` });
+        this.snackBar.open(`${err.error.msg} ⛔`, 'Ok', { duration: 2000 });
       },
     });
   }

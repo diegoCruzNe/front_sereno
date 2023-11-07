@@ -7,9 +7,9 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Sereno } from 'src/app/interfaces/sereno.interface';
 import { SerenosService } from '../services/serenos.service';
-import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
 import { switchMap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-addedit-serenos',
@@ -26,7 +26,8 @@ export class AddeditSerenosComponent implements OnInit {
     private serenoService: SerenosService,
     private router: Router,
     private datePipe: DatePipe,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private snackBar: MatSnackBar,
   ) {
     this.form = fb.group({
       dni: ['', [Validators.required]],
@@ -83,7 +84,10 @@ export class AddeditSerenosComponent implements OnInit {
 
     if (this.flag) {
       this.serenoService.addSereno(sereno).subscribe({
-        next: (res) => this.alerta('Sereno agregado!'),
+        next: (res) => {
+          this.snackBar.open('Sereno agregado 👍', 'Ok', { duration: 2000});
+          setTimeout( () => this.router.navigate(['./serenazgo/serenos/list']), 2500 );
+        },
         error: (err) => console.log(err),
       });
     } else {
@@ -92,7 +96,10 @@ export class AddeditSerenosComponent implements OnInit {
           switchMap(({ id }) => this.serenoService.updateSerenoById(id, sereno))
         )
         .subscribe({
-          next: (res) => this.alerta('Sereno editado!'),
+          next: (res) => {
+            this.snackBar.open('Sereno editado 😀', 'Ok', { duration: 2000});
+            setTimeout( () => this.router.navigate(['./serenazgo/serenos/list']), 2500 );
+          },
           error: (err) => console.log(err),
         });
     }
@@ -102,13 +109,4 @@ export class AddeditSerenosComponent implements OnInit {
     this.router.navigate(['./serenazgo/serenos/list']);
   }
 
-  alerta(mensaje: string) {
-    Swal.fire({
-      position: 'center',
-      icon: 'success',
-      title: `${mensaje}`,
-      showConfirmButton: false,
-      timer: 1500,
-    }).then(() => this.router.navigate(['./serenazgo/serenos/list']));
-  }
 }

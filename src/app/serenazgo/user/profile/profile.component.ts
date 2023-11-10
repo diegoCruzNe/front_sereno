@@ -12,7 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/auth/services/login.service';
 import { RenewUsuario } from 'src/app/interfaces/renewToken.interface';
-import { Usuario } from 'src/app/interfaces/usuario.interface';
 import { CustomvalidationService } from 'src/app/services/customvalidation.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
@@ -156,9 +155,6 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  /* openSnackBar(message: String, action: String) {
-    this.snackBar.open('hola', 'hola');
-  } */
 
   controlValuesAreEqual(
     controlNameA: string,

@@ -21,18 +21,22 @@ export class UsuariosService {
   }
 
   updateMyProfile(usuario: any, id: any) {
-    return this.http.put(`${base_url}/usuarios/${id}`, usuario, {
-      headers: { 'x-token': this.token },
-    });
+    return this.http.put(`${base_url}/usuarios/${id}`, usuario, this.headers);
   }
 
   changeMyPassword(pass: any) {
-    return this.http.post(`${base_url}/usuarios_changemypassword`, pass, {
-      headers: { 'x-token': this.token },
-    });
+    return this.http.post(`${base_url}/usuarios_changemypassword`, pass, this.headers);
   }
 
   getAllUsers(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`${base_url}/usuarios`, this.headers);
+  }
+
+  updateUserFromRootOrAdmin(usuario: Usuario, id: number) {
+    return this.http.patch(`${base_url}/usuarios/${id}`, usuario, this.headers);
+  }
+
+  getUserById(id: number): Observable<Usuario> {
+    return this.http.get<Usuario>(`${base_url}/usuarios/${id}`, this.headers);
   }
 }

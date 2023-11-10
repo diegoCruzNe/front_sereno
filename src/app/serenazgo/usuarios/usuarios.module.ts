@@ -8,7 +8,8 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { UserAgePipe } from '../pipes/user-age.pipe';
 import { UserTipouserPipe } from '../pipes/user-tipouser.pipe';
 import { EditUserComponent } from './edit-user/edit-user.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { NewUsuarioComponent } from './new-usuario/new-usuario.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,13 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     UserAgePipe,
     UserTipouserPipe,
     EditUserComponent,
+    NewUsuarioComponent,
   ],
-  imports: [CommonModule, UsuariosRoutingModule, MaterialModule],
+  imports: [
+    CommonModule,
+    UsuariosRoutingModule,
+    MaterialModule,
+    ReactiveFormsModule,
+  ],
 })
 export class UsuariosModule {}

@@ -39,4 +39,8 @@ export class UsuariosService {
   getUserById(id: number): Observable<Usuario> {
     return this.http.get<Usuario>(`${base_url}/usuarios/${id}`, this.headers);
   }
+
+  getUserByDni(dni: any): Observable<any> {
+    return this.http.get(`${base_url}/usuarios_dni/${dni}`, this.headers);
+  }
 }

@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
   ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-new-usuario',
@@ -16,15 +17,18 @@ import {
 export class NewUsuarioComponent {
   formulario: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private usuariosService: UsuariosService
+  ) {
     this.formulario = new FormGroup(
       {
         dni: new FormControl('', [
           Validators.required,
           Validators.minLength(8),
           Validators.maxLength(8),
+          this.existsDni,
         ]),
-        nombre: new FormControl('', [Validators.required]),
         passFirst: new FormControl('', [
           Validators.required,
           Validators.minLength(6),
@@ -38,24 +42,56 @@ export class NewUsuarioComponent {
     );
   }
 
-  passwordMatchValidator(g: any) {
-    const passFirst = g.get('passFirst')?.value;
-    const passRepeat = g.get('passRepeat')?.value;
-    if (passFirst !== passRepeat) {
-      g.get('passRepeat')?.setErrors({ mismatch: true });
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const passFirst = control.get('passFirst');
+    const passRepeat = control.get('passRepeat');
+
+    if (passFirst?.value !== passRepeat?.value) {
+      passRepeat?.setErrors({ dontMatch: true });
+    } else {
+      passRepeat?.setErrors(null);
     }
+
     return null;
   }
 
-  /* validarDni(control: FormControl) {
-    const dni = control.value;
-    if (dni && dni.length !== 8) {
-      return { dniInvalido: true };
-    }
-    return null;
+  /*   dniValidator(): any {
+    return (control: AbstractControl): any => {
+      const dni = control.value;
+      console.log(dni);
+    };
   } */
 
+  // existsDni(control: AbstractControl): { [key: string]: boolean } | null {
+  /* existsDni(control: AbstractControl): any {
+    const dni: any = control.value;
+    console.log(dni);
+
+    if (dni.length === 8) {
+      this.usuariosService.getUserByDni(dni).subscribe((res) => {
+        console.log(res);
+      });
+    }
+
+    return { existsDni: true };
+  } */
+
+  existsDni = (control: AbstractControl): { [key: string]: boolean } | null => {
+    const dni: any = control.value;
+    if (dni.length === 8) {
+      this.usuariosService.getUserByDni(dni).subscribe((existe) => {
+        if (existe.ok) {
+          control.setErrors({ dniExists: true });
+        } else {
+          control.setErrors(null);
+        }
+      });
+    }
+
+    return null;
+  };
+
   createUser() {
-    console.log(this.formulario);
+    console.log(this.formulario.controls['dni']);
   }
 }

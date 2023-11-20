@@ -7,6 +7,8 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
@@ -54,27 +56,6 @@ export class NewUsuarioComponent {
 
     return null;
   }
-
-  /*   dniValidator(): any {
-    return (control: AbstractControl): any => {
-      const dni = control.value;
-      console.log(dni);
-    };
-  } */
-
-  // existsDni(control: AbstractControl): { [key: string]: boolean } | null {
-  /* existsDni(control: AbstractControl): any {
-    const dni: any = control.value;
-    console.log(dni);
-
-    if (dni.length === 8) {
-      this.usuariosService.getUserByDni(dni).subscribe((res) => {
-        console.log(res);
-      });
-    }
-
-    return { existsDni: true };
-  } */
 
   existsDni = (control: AbstractControl): { [key: string]: boolean } | null => {
     const dni: any = control.value;

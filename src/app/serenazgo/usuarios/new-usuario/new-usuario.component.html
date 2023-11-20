@@ -15,8 +15,8 @@
                     El Dni debe tener 8 dígitos</mat-error>
                 <mat-error *ngIf="formulario.controls['dni'].errors?.['dniExists']">Dni ya existe</mat-error>
                 <mat-error
-                    *ngIf="formulario.controls['dni'].errors?.['required'] && formulario.controls['dni'].touched">Dni es
-                    obligatorio</mat-error>
+                    *ngIf="formulario.controls['dni'].errors?.['required'] && formulario.controls['dni'].touched">
+                    Dni es obligatorio</mat-error>
             </mat-form-field>
 
             <!-- Nombre -->

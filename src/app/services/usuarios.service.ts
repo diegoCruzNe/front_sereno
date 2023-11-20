@@ -36,7 +36,7 @@ export class UsuariosService {
     return this.http.patch(`${base_url}/usuarios/${id}`, usuario, this.headers);
   }
 
-  getUserById(id: number): Observable<Usuario> {
+  getUserById(id: number): Observable<Usuario> { 
     return this.http.get<Usuario>(`${base_url}/usuarios/${id}`, this.headers);
   }
 

@@ -7,8 +7,8 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
@@ -21,7 +21,9 @@ export class NewUsuarioComponent {
 
   constructor(
     private fb: FormBuilder,
-    private usuariosService: UsuariosService
+    private usuariosService: UsuariosService,
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.formulario = new FormGroup(
       {
@@ -31,6 +33,13 @@ export class NewUsuarioComponent {
           Validators.maxLength(8),
           this.existsDni,
         ]),
+        nombre: new FormControl('', [Validators.required]),
+        apellido: new FormControl('', [Validators.required]),
+        correo: new FormControl('', [Validators.email]),
+        nacimiento: new FormControl('', [Validators.required]),
+        direccion: new FormControl(''),
+        sexo: new FormControl('masculino', Validators.required),
+        telefono: new FormControl(''),
         passFirst: new FormControl('', [
           Validators.required,
           Validators.minLength(6),
@@ -73,6 +82,45 @@ export class NewUsuarioComponent {
   };
 
   createUser() {
-    console.log(this.formulario.controls['dni']);
+    const {
+      dni,
+      nombre,
+      apellido,
+      correo,
+      direccion,
+      sexo,
+      telefono,
+      passFirst,
+    } = this.formulario.value;
+    const fecha = new Date(this.formulario.value.nacimiento);
+
+    const usuario: any = {
+      dni,
+      nombre,
+      apellido,
+      nacimiento: `${fecha.getFullYear()}-${
+        fecha.getMonth() + 1
+      }-${fecha.getDate()}`,
+      contrasena: passFirst,
+      correo,
+      direccion,
+      telefono,
+      sexo,
+    };
+
+    this.usuariosService.creaeUser(usuario).subscribe({
+      next: (resp: any) => {
+        this.snackBar.open(`${resp.msg} 👍`, 'Ok', { duration: 3000 });
+        this.router.navigate(['/serenazgo/usuarios/list']);
+      },
+      error: (err) => {
+        console.log(err);
+        if (!err.error.ok) {
+          this.snackBar.open(`${err.error.msg ?? 'Ocurrió un error'} ⛔`, 'Ok', {
+            duration: 3000,
+          }); 
+        } 
+      },
+    });
   }
 }

@@ -22,48 +22,48 @@
             <!-- Nombre -->
             <mat-form-field class="flex-child">
                 <mat-label>Nombre</mat-label>
-                <input matInput placeholder="Nombre">
+                <input matInput placeholder="Nombre" formControlName="nombre">
                 <mat-icon matSuffix>person</mat-icon>
             </mat-form-field>
 
             <!-- Apellidos -->
             <mat-form-field class="flex-child">
                 <mat-label>Apellidos</mat-label>
-                <input matInput placeholder="Apellidos">
+                <input matInput placeholder="Apellidos" formControlName="apellido">
                 <mat-icon matSuffix>person</mat-icon>
             </mat-form-field>
 
             <!-- Correo -->
             <mat-form-field class="flex-child">
                 <mat-label>Correo</mat-label>
-                <input matInput placeholder="Correo">
+                <input matInput placeholder="Correo" formControlName="correo">
                 <mat-icon matSuffix>alternate_email</mat-icon>
             </mat-form-field>
 
             <!-- Nacimiento -->
             <mat-form-field class="flex-child">
-                <mat-label>Fecha de nacimiento</mat-label>
-                <input matInput [matDatepicker]="picker">
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-label>Selecciona una fecha</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="nacimiento">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
 
             <!-- Dirección -->
             <mat-form-field class="flex-child">
                 <mat-label>Domicilio</mat-label>
-                <input matInput placeholder="Domicilio">
+                <input matInput placeholder="Domicilio" formControlName="direccion">
                 <mat-icon matSuffix>home</mat-icon>
             </mat-form-field>
 
             <!-- Telefono -->
             <mat-form-field class="flex-child">
                 <mat-label>Celular</mat-label>
-                <input matInput placeholder="Celular">
+                <input matInput placeholder="Celular" formControlName="telefono">
                 <mat-icon matSuffix>call</mat-icon>
             </mat-form-field>
-
-
-
 
             <!-- Contraseña 1 -->
             <mat-form-field class="flex-child">
@@ -97,7 +97,7 @@
             <!-- Genero -->
             <div class="radio-group-container">
                 <label>Género</label>
-                <mat-radio-group class="radio-group">
+                <mat-radio-group class="radio-group" formControlName="sexo">
                     <mat-radio-button value="masculino">Masculino</mat-radio-button>
                     <mat-radio-button value="femenino">Femenino</mat-radio-button>
                 </mat-radio-group>
@@ -105,7 +105,7 @@
 
         </mat-card-content>
         <mat-card-actions align="end">
-            <button [routerLink]="['/serenazgo/usuarios/list']" mat-raised-button
+            <button type="button" [routerLink]="['/serenazgo/usuarios/list']" mat-raised-button
                 style="margin-right: 8px;">Cancelar</button>
             <button mat-raised-button color="primary" type="submit">Guardar</button>
         </mat-card-actions>

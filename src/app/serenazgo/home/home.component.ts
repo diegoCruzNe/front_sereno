@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCarSide, faPeopleGroup, faPersonMilitaryPointing, faUsersGear } from '@fortawesome/free-solid-svg-icons';
+import { faCarSide, faPeopleGroup, faPersonMilitaryPointing, faUsersGear, faUserLock } from '@fortawesome/free-solid-svg-icons';
 import { LoginService } from 'src/app/auth/services/login.service';
 
 @Component({
@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterContentInit {
   lightClassName = 'theme-light';
   faCarSide = faCarSide;
   faUsersGear = faUsersGear;
+  faUserLock = faUserLock
   faPeopleGroup = faPeopleGroup;
   faPersonMilitaryPointing = faPersonMilitaryPointing;
   permissionsUser: boolean = false;

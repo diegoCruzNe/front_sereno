@@ -43,4 +43,8 @@ export class UsuariosService {
   getUserByDni(dni: any): Observable<any> {
     return this.http.get(`${base_url}/usuarios_dni/${dni}`, this.headers);
   }
+
+  creaeUser(usuario: any) {
+    return this.http.post(`${base_url}/usuarios`, usuario, this.headers)
+  }
 }

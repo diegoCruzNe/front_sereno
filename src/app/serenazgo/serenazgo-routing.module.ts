@@ -16,8 +16,8 @@ const routes: Routes = [
       { path: 'grupos', loadChildren: () => import('./grupos/grupos.module').then((m) => m.GruposModule) },
       { path: 'user', loadChildren: () => import('./user/user.module').then((m) => m.UserModule) },
       { path: 'usuarios', canActivate: [UsuariosGuard], loadChildren: () => import('./usuarios/usuarios.module').then((m) => m.UsuariosModule) },
-      // todo
-      { path: '**', redirectTo: 'usuarios/newuser' },
+      { path: 'denuncia', loadChildren: () => import("./denuncia/denuncia.module").then((m) => m.DenunciaModule) },
+      { path: '**', redirectTo: 'denuncia' },
     ],
   },
 ];

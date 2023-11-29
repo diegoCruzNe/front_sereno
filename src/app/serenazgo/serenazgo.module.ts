@@ -13,7 +13,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
-  //UserAgePipe
   declarations: [HomeComponent, SerenoComponent, UnidadPipe],
   imports: [
     CommonModule,

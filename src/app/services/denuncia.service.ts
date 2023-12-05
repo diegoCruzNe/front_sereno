@@ -33,4 +33,15 @@ export class DenunciaService {
       params,
     });
   }
+
+  getListDenunciasByDate(date: string) {
+    return this.http.get<ListDenuncias>(`${base_url}/denuncia_buscar`, {
+      headers: {
+        'x-token': this.token,
+      },
+      params: {
+        date: date,
+      },
+    });
+  }
 }

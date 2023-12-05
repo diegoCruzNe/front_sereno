@@ -1,0 +1,17 @@
+.div-spinner {
+    margin-left: 40vw;
+    margin-right: 40vw;
+    margin-top: 20vh;
+    margin-bottom: 20vh;
+}
+
+.flex-mat-card-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.div-button {
+    margin-bottom: 10px;
+}

@@ -1,15 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { catchError, map, merge, of, pipe, startWith, switchMap } from 'rxjs';
+import { Component, ViewChild, AfterViewInit, Injectable } from '@angular/core';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { map, merge, startWith, switchMap } from 'rxjs';
 import { Denuncias } from 'src/app/interfaces/denuncias.interface';
 import { ListDenuncias } from 'src/app/interfaces/listDenuncias.interface';
 import { DenunciaService } from 'src/app/services/denuncia.service';
-import { environment } from 'src/environments/environment';
-
-const base_url = environment.baseUrl;
 
 @Component({
   selector: 'app-listado-denuncias',
@@ -18,55 +13,70 @@ const base_url = environment.baseUrl;
 })
 export class ListadoDenunciasComponent implements AfterViewInit {
   columnas = ['id_denuncia', 'fecha', 'hora', 'delito'];
-  exampleDatabase!: ExampleHttpDatabase | null;
-  data: any[] = [];
+  data: Denuncias[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  resultsLength: number = 1;
+  resultsLength: number = 0;
+  isLoadingResults: boolean = true;
+  pageSize: number = 10;
+  enablePagination: boolean = false;
 
-  constructor(private _httpClient: HttpClient) {}
+  constructor(
+    private denunciaService: DenunciaService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngAfterViewInit() {
-    this.exampleDatabase = new ExampleHttpDatabase(this._httpClient);
+    this.getData();
+  }
 
+  getData() {
     merge(this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
-          return this.exampleDatabase!.getRepoIssues(
+          this.isLoadingResults = true;
+          return this.denunciaService.getListDenuncias(
             this.paginator.pageIndex + 1
-          ).pipe(catchError(() => of(null)));
+          );
         }),
-        map((data: any) => {
+        map((data: ListDenuncias) => {
+          this.isLoadingResults = false;
           this.resultsLength = data.total;
           return data.denuncias;
         })
       )
-      .subscribe((data) => (this.data = data));
+      .subscribe((response) => {
+        this.data = response;
+      });
+  }
+
+  applyFilter(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.denunciaService
+        .getListDenunciasByDate(filterValue)
+        .subscribe((response) => {
+          if (response.total === 0) {
+            this.snackBar.open('No hay denuncias 😕', 'Ok', {
+              duration: 2000,
+            });
+            this.getData();
+          } else if (response.total > 0) {
+            this.data = response.denuncias;
+            this.resultsLength = response.total;
+            this.pageSize = 1;
+            this.enablePagination = true;
+          }
+        });
+    }
   }
 }
 
-export class ExampleHttpDatabase {
-  constructor(private _httpClient: HttpClient) {}
-
-  get token(): string {
-    return localStorage.getItem('token') || '';
-  }
-
-  get headers() {
-    return { headers: { 'x-token': this.token } };
-  }
-
-  getRepoIssues(page?: number, limit?: number) {
-    let params = new HttpParams();
-
-    if (page !== undefined) params = params.set('page', page.toString());
-    if (limit !== undefined) params = params.set('limit', limit.toString());
-
-    return this._httpClient.get<ListDenuncias>(`${base_url}/denuncia`, {
-      headers: {
-        'x-token': this.token,
-      },
-      params,
-    });
-  }
+@Injectable()
+export class CustomMatPaginatorIntl extends MatPaginatorIntl {
+  override itemsPerPageLabel: string = 'Denuncias por página: ';
+  override nextPageLabel: string = 'Siguiente';
+  override previousPageLabel: string = 'Anterior';
+  override firstPageLabel: string = 'Primera página';
+  override lastPageLabel: string = 'Última página';
 }

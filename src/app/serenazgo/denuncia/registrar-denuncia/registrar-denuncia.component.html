@@ -4,11 +4,50 @@
         <mat-card-subtitle>Formulario</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <h4>....contenido...</h4>
-        <h4>....contenido...</h4>
-        <h4>....contenido...</h4>
-        <h4>....contenido...</h4>
-        <h4>....contenido...</h4>
+
+        <!-- Fecha -->
+        <mat-form-field>
+            <mat-label>Fecha</mat-label>
+            <input matInput placeholder="Fecha">
+        </mat-form-field>
+
+        <!-- Delito -->
+        <mat-form-field>
+            <mat-label>Delito</mat-label>
+            <mat-select>
+                <mat-option>-- Ninguno --</mat-option>
+                <mat-optgroup *ngFor="let grupo of grupos_delitos" [label]="grupo.tipo_delito">
+                    <mat-option *ngFor="let delito of grupo.delito" [value]="delito.id">{{delito.nombre}}</mat-option>
+                </mat-optgroup>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Detalles -->
+        <mat-form-field>
+            <mat-label>Detalles</mat-label>
+            <input matInput #message maxlength="256" placeholder="Detalles de la denuncia (opcional)">
+            <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+        </mat-form-field>
+
+        <!-- Direccion -->
+        <mat-form-field>
+            <mat-label>Direccion</mat-label>
+            <input matInput placeholder="Ej: calle san jose 204">
+        </mat-form-field>
+
+        <!-- Denunciante -->
+        <mat-form-field>
+            <mat-label>Dni del agraviado</mat-label>
+            <input matInput placeholder="Opcional">
+        </mat-form-field>
+
+        <!-- Lat -->
+        <input type="hidden">
+
+        <!-- Lng -->
+        <input type="hidden">
+
+
     </mat-card-content>
     <mat-card-actions align="end">
         <button type="button" [routerLink]="['/serenazgo/denuncia/listado']" mat-raised-button

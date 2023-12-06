@@ -18,8 +18,22 @@ export interface Delito {
 })
 export class RegistrarDenunciaComponent implements OnInit {
   grupos_delitos: CaterogiaDelito[] = [];
+  display: any;
+  center: google.maps.LatLngLiteral = {
+    lat: 24,
+    lng: 12,
+  };
+  zoom = 4;
 
   constructor(private delitoService: DelitoService) {}
+
+  moveMap(event: google.maps.MapMouseEvent) {
+    if (event.latLng != null) this.center = event.latLng.toJSON();
+  }
+
+  move(event: google.maps.MapMouseEvent) {
+    if (event.latLng != null) this.display = event.latLng.toJSON();
+  }
 
   ngOnInit() {
     this.getDelitosPorCategoria();

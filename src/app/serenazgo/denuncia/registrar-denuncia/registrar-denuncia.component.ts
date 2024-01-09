@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { DelitoService } from 'src/app/services/delito.service';
 import { Loader } from '@googlemaps/js-api-loader';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import * as moment from 'moment';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
 
 export interface CaterogiaDelito {
   tipo_delito: string;
@@ -26,11 +32,12 @@ export interface MapGeocoderResponse {
   styleUrls: ['./registrar-denuncia.component.css'],
 })
 export class RegistrarDenunciaComponent implements OnInit {
-  date = new FormControl(moment().toDate()); 
+  api_maps = environment.api_maps;
+  date = new FormControl(moment().toDate());
   grupos_delitos: CaterogiaDelito[] = [];
   map!: google.maps.Map;
   service!: google.maps.places.PlacesService;
-  infowindow!: google.maps.InfoWindow; 
+  infowindow!: google.maps.InfoWindow;
   markers: google.maps.Marker[] = [];
   lat!: number;
   lng!: number;
@@ -43,12 +50,13 @@ export class RegistrarDenunciaComponent implements OnInit {
   ) {
     this.formulario = new FormGroup({
       fecha: new FormControl(moment().toDate(), Validators.required),
+      dni: new FormControl
     });
   }
 
   ngOnInit() {
     const loader = new Loader({
-      apiKey: 'my_api_key',
+      apiKey: this.api_maps,
       libraries: ['places'],
     });
     loader.importLibrary('maps').then(() => {
@@ -113,30 +121,12 @@ export class RegistrarDenunciaComponent implements OnInit {
       this.map.fitBounds(bounds);
     });
     this.map.addListener('click', (e: google.maps.MapMouseEvent) => {
-      this.addMarkerOnMap(e, myMarker);
-      // if (myMarker) myMarker.setMap(null);
-      // myMarker = new google.maps.Marker({
-      //   position: e.latLng,
-      //   map: this.map,
-      // });
-      // this.map.panTo(e.latLng!);
-      // this.lat = e.latLng!.toJSON().lat;
-      // this.lng = e.latLng!.toJSON().lng;
+      if (myMarker) myMarker.setMap(null);
+      myMarker = new google.maps.Marker({ position: e.latLng, map: this.map });
+      this.map.panTo(e.latLng!);
+      this.lat = e.latLng!.toJSON().lat;
+      this.lng = e.latLng!.toJSON().lng;
     });
-  }
-
-  addMarkerOnMap(
-    e: google.maps.MapMouseEvent,
-    marker: google.maps.Marker | null
-  ) {
-    if (marker) marker.setMap(null);
-    marker = new google.maps.Marker({
-      position: e.latLng,
-      map: this.map,
-    });
-    this.map.panTo(e.latLng!);
-    this.lat = e.latLng!.toJSON().lat;
-    this.lng = e.latLng!.toJSON().lng;
   }
 
   getDelitosPorCategoria() {

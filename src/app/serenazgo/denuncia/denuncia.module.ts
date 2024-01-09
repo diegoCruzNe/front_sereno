@@ -11,6 +11,8 @@ import { HoraDenunciaPipe } from '../pipes/hora-denuncia.pipe';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { RegistrarDenunciaComponent } from './registrar-denuncia/registrar-denuncia.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,10 @@ import { GoogleMapsModule } from '@angular/google-maps';
     DenunciaRoutingModule,
     MaterialModule,
     GoogleMapsModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
 })

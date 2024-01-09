@@ -48,7 +48,7 @@ export class RegistrarDenunciaComponent implements OnInit {
 
   ngOnInit() {
     const loader = new Loader({
-      apiKey: 'AIzaSyBAYGaRA8MhHjORE85HgyhY7GIBOqgnpq4',
+      apiKey: 'my_api_key',
       libraries: ['places'],
     });
     loader.importLibrary('maps').then(() => {

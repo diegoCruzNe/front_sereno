@@ -26,7 +26,7 @@ export interface MapGeocoderResponse {
   styleUrls: ['./registrar-denuncia.component.css'],
 })
 export class RegistrarDenunciaComponent implements OnInit {
-  date = new FormControl(moment().toDate());
+  date = new FormControl(moment().toDate()); 
   grupos_delitos: CaterogiaDelito[] = [];
   map!: google.maps.Map;
   service!: google.maps.places.PlacesService;

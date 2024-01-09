@@ -30,7 +30,7 @@ export class RegistrarDenunciaComponent implements OnInit {
   grupos_delitos: CaterogiaDelito[] = [];
   map!: google.maps.Map;
   service!: google.maps.places.PlacesService;
-  infowindow!: google.maps.InfoWindow;
+  infowindow!: google.maps.InfoWindow; 
   markers: google.maps.Marker[] = [];
   lat!: number;
   lng!: number;

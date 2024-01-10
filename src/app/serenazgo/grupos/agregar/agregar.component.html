@@ -12,7 +12,7 @@
                 <!--  -->
                 <mat-form-field appearance="fill">
                     <mat-label>Seleccionar turno</mat-label>
-                    <mat-select required  (selectionChange)="getTurno($event.value)" formControlName="turno">
+                    <mat-select required (selectionChange)="getTurno($event.value)" formControlName="turno">
                         <mat-option *ngFor="let turno of arr_turno" [value]=turno.id_turno>{{ turno.turno}}</mat-option>
                     </mat-select>
                 </mat-form-field>

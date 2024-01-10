@@ -3,14 +3,14 @@
         <mat-card-title>Registrar nueva denuncia</mat-card-title>
         <mat-card-subtitle>Formulario</mat-card-subtitle>
     </mat-card-header>
-    <form>
-        <mat-card-content >
+    <form [formGroup]="formulario" (ngSubmit)="crearEvent()">
+        <mat-card-content>
 
             <div class="flex-group-a">
                 <!-- Fecha -->
                 <mat-form-field appearance="fill" class="flex-child-a">
                     <mat-label>Fecha</mat-label>
-                    <input matInput [matDatepicker]="dp" [formControl]="date">
+                    <input matInput [matDatepicker]="dp" [formControl]="date" formControlName="fecha">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
                     <mat-datepicker #dp></mat-datepicker>
@@ -19,7 +19,7 @@
                 <!-- Delito -->
                 <mat-form-field class="flex-child-a" id="delito-flex-child-a">
                     <mat-label>Delito</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="tipo_delito">
                         <mat-option>-- Ninguno --</mat-option>
                         <mat-optgroup *ngFor="let grupo of grupos_delitos" [label]="grupo.tipo_delito">
                             <mat-option *ngFor="let delito of grupo.delito"
@@ -28,16 +28,16 @@
                     </mat-select>
                 </mat-form-field>
 
-                <!-- Denunciante -->
+                <!-- Dni -->
                 <mat-form-field class="flex-child-a">
                     <mat-label>Dni del agraviado</mat-label>
-                    <input matInput placeholder="Opcional">
+                    <input matInput placeholder="Opcional" formControlName="dni">
                 </mat-form-field>
 
                 <!-- Nombre y/o apellidos -->
                 <mat-form-field class="flex-child-a">
                     <mat-label>Nombres y apellidos</mat-label>
-                    <input matInput placeholder="Opcional">
+                    <input matInput placeholder="Opcional" formControlName="agraviado">
                 </mat-form-field>
             </div>
 
@@ -45,25 +45,25 @@
             <div class="flex-group-b">
                 <mat-form-field id="child-flex-group-b">
                     <mat-label>Detalles</mat-label>
-                    <textarea matInput #message maxlength="256"
-                        placeholder="Detalles de la denuncia (opcional)"></textarea>
+                    <textarea matInput #message maxlength="256" placeholder="Detalles de la denuncia (opcional)"
+                        formControlName="detalles"></textarea>
                     <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
                 </mat-form-field>
             </div>
 
-            <!-- Direccion --> 
+            <!-- Direccion -->
             <div class="flex-group-c">
                 <mat-form-field id="child-flex-group-c">
                     <mat-label>Direccion</mat-label>
-                    <input id="pac-input" matInput placeholder="Ej: calle san jose 204">  
+                    <input id="pac-input" matInput placeholder="Ej: calle san jose 204" formControlName="direccion">
                 </mat-form-field>
             </div>
 
             <!-- Lat -->
-            <input type="hidden" [value]="lat">
+            <input type="text" formControlName="lat">
 
             <!-- Lng -->
-            <input type="hidden" [value]="lng">
+            <input type="text" formControlName="lng">
 
             <div id="map"></div>
 
@@ -73,7 +73,7 @@
         <mat-card-actions align="end">
             <button type="button" [routerLink]="['/serenazgo/denuncia/listado']" mat-raised-button
                 style="margin-right: 8px;">Cancelar</button>
-            <button mat-raised-button color="primary" type="submit">Siguiente</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="formulario.invalid" >Siguiente</button>
         </mat-card-actions>
     </form>
 </mat-card>

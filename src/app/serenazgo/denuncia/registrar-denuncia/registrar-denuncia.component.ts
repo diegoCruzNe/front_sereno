@@ -39,8 +39,6 @@ export class RegistrarDenunciaComponent implements OnInit {
   service!: google.maps.places.PlacesService;
   infowindow!: google.maps.InfoWindow;
   markers: google.maps.Marker[] = [];
-  lat!: number;
-  lng!: number;
   formulario: FormGroup;
 
   constructor(
@@ -50,7 +48,16 @@ export class RegistrarDenunciaComponent implements OnInit {
   ) {
     this.formulario = new FormGroup({
       fecha: new FormControl(moment().toDate(), Validators.required),
-      dni: new FormControl
+      dni: new FormControl('', [
+        Validators.minLength(8),
+        Validators.maxLength(8),
+      ]),
+      tipo_delito: new FormControl('', Validators.required),
+      agraviado: new FormControl(''),
+      detalles: new FormControl(''),
+      direccion: new FormControl(''),
+      lat: new FormControl(''),
+      lng: new FormControl(''),
     });
   }
 
@@ -61,12 +68,22 @@ export class RegistrarDenunciaComponent implements OnInit {
     });
     loader.importLibrary('maps').then(() => {
       this.inicioMapa();
-      this._snackBar.open('Seleccione un punto en el mapa', 'Ok', {
-        duration: 2500,
-      });
     });
 
     this.getDelitosPorCategoria();
+  }
+
+  crearEvent(){
+    if (
+      this.formulario.value['lat'].length === 0 ||
+      this.formulario.value['lng'].length === 0
+    ) {
+      return this._snackBar.open('Seleccione un punto en el mapa', 'Ok', {
+        duration: 2500,
+      });
+    }
+    console.log(this.formulario.value);
+    return true
   }
 
   inicioMapa() {
@@ -124,8 +141,8 @@ export class RegistrarDenunciaComponent implements OnInit {
       if (myMarker) myMarker.setMap(null);
       myMarker = new google.maps.Marker({ position: e.latLng, map: this.map });
       this.map.panTo(e.latLng!);
-      this.lat = e.latLng!.toJSON().lat;
-      this.lng = e.latLng!.toJSON().lng;
+      this.formulario.controls['lat'].setValue(e.latLng!.toJSON().lat);
+      this.formulario.controls['lng'].setValue(e.latLng!.toJSON().lng);
     });
   }
 

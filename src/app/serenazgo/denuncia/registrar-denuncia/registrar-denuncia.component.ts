@@ -73,7 +73,7 @@ export class RegistrarDenunciaComponent implements OnInit {
     this.getDelitosPorCategoria();
   }
 
-  crearEvent(){
+  crearEvent() {
     if (
       this.formulario.value['lat'].length === 0 ||
       this.formulario.value['lng'].length === 0
@@ -83,7 +83,7 @@ export class RegistrarDenunciaComponent implements OnInit {
       });
     }
     console.log(this.formulario.value);
-    return true
+    return true;
   }
 
   inicioMapa() {

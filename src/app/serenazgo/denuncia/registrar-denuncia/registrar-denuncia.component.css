@@ -63,7 +63,7 @@
         width: 94vw;
     }
 
-    #child-flex-group-b { 
+    #child-flex-group-b {
         width: 60vw;
         height: 150px;
     }
@@ -71,6 +71,4 @@
     #child-flex-group-c {
         width: 60vw;
     }
-
-
 }

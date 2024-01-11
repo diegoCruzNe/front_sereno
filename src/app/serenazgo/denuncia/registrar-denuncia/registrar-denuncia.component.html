@@ -32,7 +32,10 @@
                 <mat-form-field class="flex-child-a">
                     <mat-label>Dni del agraviado</mat-label>
                     <input matInput placeholder="Opcional" formControlName="dni">
-                </mat-form-field>
+                    <mat-error
+                        *ngIf="formulario.controls['dni'].errors?.['minlength']?.['actualLength'] && formulario.controls['dni'].touched">Dni
+                        debe tener 8 dígitos</mat-error>
+                </mat-form-field>                
 
                 <!-- Nombre y/o apellidos -->
                 <mat-form-field class="flex-child-a">
@@ -60,10 +63,10 @@
             </div>
 
             <!-- Lat -->
-            <input type="text" formControlName="lat">
+            <input type="hidden" formControlName="lat">
 
             <!-- Lng -->
-            <input type="text" formControlName="lng">
+            <input type="hidden" formControlName="lng">
 
             <div id="map"></div>
 

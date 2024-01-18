@@ -20,7 +20,8 @@ export class LoginService {
 
   login(formData: { dni: string; password: string }) {
     return this.http
-      .post(`${base_url}/auth`, formData)
+       .post(`${base_url}/auth`, formData)
+      // .post(`http://localhost:3000/api/auth`, formData)
       .pipe(tap((res: any) => localStorage.setItem('token', res.token)));
   }
 
@@ -42,6 +43,7 @@ export class LoginService {
   getDataUser(): Observable<RenewUsuario> {
     return this.http.get<RenewUsuario> (
       `${base_url}/auth`, 
+      // `http://localhost:3000/api/auth`, 
       { headers: { 'x-token': this.token || '' }}
     )
   }

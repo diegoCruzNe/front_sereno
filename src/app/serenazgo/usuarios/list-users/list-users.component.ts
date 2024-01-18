@@ -36,6 +36,7 @@ export class ListUsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    // todo: change latency on load myTypeUser
     this.getInfoMyUser();
     this.getAllUsuarios();
   }
@@ -43,6 +44,7 @@ export class ListUsersComponent implements OnInit {
   getAllUsuarios() {
     this.usuariosService.getAllUsers().subscribe((usuario: Usuario[]) => {
       usuario.forEach((user) => {
+        console.log(this.myTypeUser);
         let available: boolean = false;
         if (this.myTypeUser === 1 && user.fk_tipo_us === 2) available = true;
         else if (this.myTypeUser === 1 && user.fk_tipo_us === 3)
@@ -51,6 +53,7 @@ export class ListUsersComponent implements OnInit {
           available = true;
 
         user.estado = available;
+        // console.log(`Id: ${user.id_usuario} -Estado: ${user.estado} - Tipo de usuario: ${user.fk_tipo_us}`);
       });
 
       this.dataSource.data = usuario;

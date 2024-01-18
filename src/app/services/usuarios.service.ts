@@ -13,7 +13,7 @@ export class UsuariosService {
   constructor(private http: HttpClient) {}
 
   get token(): string {
-    return localStorage.getItem('token') || '';
+    return localStorage.getItem('token') || ''; 
   }
 
   get headers() {
@@ -25,7 +25,7 @@ export class UsuariosService {
   }
 
   changeMyPassword(pass: any) {
-    return this.http.post(`${base_url}/usuarios_changemypassword`, pass, this.headers);
+    return this.http.post(`${base_url}/usuarios/change_my_password`, pass, this.headers);
   }
 
   getAllUsers(): Observable<Usuario[]> {
@@ -41,7 +41,8 @@ export class UsuariosService {
   }
 
   getUserByDni(dni: any): Observable<any> {
-    return this.http.get(`${base_url}/usuarios_dni/${dni}`, this.headers);
+    // return this.http.get(`${base_url}/usuarios_dni/${dni}`, this.headers);
+    return this.http.get(`${base_url}/usuarios/dni/${dni}`, this.headers);
   }
 
   creaeUser(usuario: any) {

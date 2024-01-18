@@ -26,7 +26,8 @@ export class DenunciaService {
     if (page !== undefined) params = params.set('page', page.toString());
     if (limit !== undefined) params = params.set('limit', limit.toString());
 
-    return this.http.get<ListDenuncias>(`${base_url}/denuncia`, {
+    // return this.http.get<ListDenuncias>(`${base_url}/denuncia`, {
+    return this.http.get<ListDenuncias>(`${base_url}/denuncia`, { 
       headers: {
         'x-token': this.token,
       },
@@ -35,13 +36,12 @@ export class DenunciaService {
   }
 
   getListDenunciasByDate(date: string) {
-    return this.http.get<ListDenuncias>(`${base_url}/denuncia_buscar`, {
+    // return this.http.get<ListDenuncias>(`${base_url}/denuncia_buscar`, {
+    return this.http.get<ListDenuncias>(`${base_url}/denuncia/buscar_by_date`, {
       headers: {
         'x-token': this.token,
       },
-      params: {
-        date: date,
-      },
+      params: { date: date },
     });
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { RenewUsuario } from 'src/app/interfaces/renewToken.interface';
 import { Usuario } from 'src/app/interfaces/usuario.interface';
@@ -12,16 +12,29 @@ const base_url = environment.baseUrl;
   providedIn: 'root',
 })
 export class LoginService {
+  myBehaviorSubject = new BehaviorSubject<RenewUsuario | null>(null);
+
   constructor(private http: HttpClient) {}
 
   get token(): string {
     return localStorage.getItem('token') || '';
   }
 
+  private setBehaviorSubject(value: RenewUsuario | null) {
+    this.myBehaviorSubject.next(value);
+  }
+
+  getBehaviorSubject() {
+    return this.myBehaviorSubject.asObservable();
+  }
+
+  cleanBehaviorSubject() {
+    this.myBehaviorSubject.next(null);
+  }
+
   login(formData: { dni: string; password: string }) {
     return this.http
-       .post(`${base_url}/auth`, formData)
-      // .post(`http://localhost:3000/api/auth`, formData)
+      .post(`${base_url}/auth`, formData)
       .pipe(tap((res: any) => localStorage.setItem('token', res.token)));
   }
 
@@ -31,6 +44,9 @@ export class LoginService {
         headers: { 'x-token': this.token || '' },
       })
       .pipe(
+        tap((res) => {
+          this.setBehaviorSubject(res);
+        }),
         map((value: RenewUsuario) => {
           return value.ok;
         }),
@@ -41,11 +57,9 @@ export class LoginService {
   }
 
   getDataUser(): Observable<RenewUsuario> {
-    return this.http.get<RenewUsuario> (
-      `${base_url}/auth`, 
-      // `http://localhost:3000/api/auth`, 
-      { headers: { 'x-token': this.token || '' }}
-    )
+    return this.http.get<RenewUsuario>(`${base_url}/auth`, {
+      headers: { 'x-token': this.token || '' },
+    });
   }
 
   crearUsuario(objUsuario: Usuario) {

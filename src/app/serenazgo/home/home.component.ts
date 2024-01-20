@@ -5,11 +5,20 @@ import {
   OnInit,
   ChangeDetectorRef,
   OnDestroy,
-  HostBinding, AfterContentInit
+  HostBinding,
+  AfterContentInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCarSide, faPeopleGroup, faPersonMilitaryPointing, faUsersGear, faUserLock } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCarSide,
+  faPeopleGroup,
+  faPersonMilitaryPointing,
+  faUsersGear,
+  faUserLock,
+  faRoute,
+} from '@fortawesome/free-solid-svg-icons';
+import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/auth/services/login.service';
 
 @Component({
@@ -26,10 +35,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterContentInit {
   lightClassName = 'theme-light';
   faCarSide = faCarSide;
   faUsersGear = faUsersGear;
-  faUserLock = faUserLock
+  faUserLock = faUserLock;
   faPeopleGroup = faPeopleGroup;
   faPersonMilitaryPointing = faPersonMilitaryPointing;
+  faRoute = faRoute;
   permissionsUser: boolean = false;
+  permissionsSereno: boolean = false;
+  subscription1$ = new Subscription();
+  subscription2$ = new Subscription();
+  subscription3$ = new Subscription();
 
   constructor(
     private overlay: OverlayContainer,
@@ -52,40 +66,55 @@ export class HomeComponent implements OnInit, OnDestroy, AfterContentInit {
       this.overlay.getContainerElement().classList.add(this.darkClassName);
       this.toggleControl.setValue(true);
     }
+    this.getBehaviorSubject();
   }
 
   getUserType() {
-    this.loginService.getDataUser().subscribe((res: any) => {
-      if (res.usuario.fk_tipo_us === 1 || res.usuario.fk_tipo_us === 2) {
-        this.permissionsUser = true;
-      } 
-    });
+    this.subscription1$ = this.loginService
+      .getDataUser()
+      .subscribe((res: any) => {
+        if (res.usuario.fk_tipo_us === 1 || res.usuario.fk_tipo_us === 2)
+          this.permissionsUser = true;
+      });
   }
 
   ngAfterContentInit() {}
 
   changeTheme(val: boolean) {
     this.className = val ? this.darkClassName : this.lightClassName;
-    if (val) {
+    if (val)
       this.overlay.getContainerElement().classList.add(this.darkClassName);
-    } else {
+    else
       this.overlay.getContainerElement().classList.remove(this.darkClassName);
-    }
   }
 
   slideToggle() {
-    this.toggleControl.valueChanges.subscribe((res: any) => {
-      localStorage.setItem('tema', res);
-      this.changeTheme(res);
-    });
+    this.subscription2$ = this.toggleControl.valueChanges.subscribe(
+      (res: any) => {
+        localStorage.setItem('tema', res);
+        this.changeTheme(res);
+      }
+    );
   }
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.subscription1$.unsubscribe();
+    this.subscription2$.unsubscribe();
+    this.subscription3$.unsubscribe();
+  }
+
+  getBehaviorSubject() {
+    this.subscription3$ = this.loginService
+      .getBehaviorSubject()
+      .subscribe((res) => {
+        if (res?.usuario.fk_tipo_us === 3) this.permissionsSereno = true;
+      });
   }
 
   logout() {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/auth');
+    this.loginService.cleanBehaviorSubject();
   }
 }

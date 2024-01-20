@@ -33,7 +33,6 @@ export class HomeUnidadComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
-          console.log('❤️');
           this.recargarOutlet();
           return;
         }

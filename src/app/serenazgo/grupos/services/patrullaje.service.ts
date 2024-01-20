@@ -45,6 +45,6 @@ export class PatrullajeService {
   }
 
   getPatrullajeDetalles(): Observable<PatrullajeDetails[]> {
-    return this.http.get<PatrullajeDetails[]>(`${this.url}/patrullaje_det`, this.headers);
+    return this.http.get<PatrullajeDetails[]>(`${this.url}/patrullaje/detalles`, this.headers);
   }
 }

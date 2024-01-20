@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,13 +6,14 @@ import { LoginService } from 'src/app/auth/services/login.service';
 import { Usuario } from 'src/app/interfaces/usuario.interface';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { UsuariosideditService } from '../../../services/usuariosidedit.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-users',
   templateUrl: './list-users.component.html',
   styleUrls: ['./list-users.component.css'],
 })
-export class ListUsersComponent implements OnInit {
+export class ListUsersComponent implements OnInit, OnDestroy {
   columnas = [
     'nombre',
     'apellido',
@@ -25,7 +26,9 @@ export class ListUsersComponent implements OnInit {
   dataSource: MatTableDataSource<Usuario>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  myTypeUser!: number;
+  myTypeUser: number = 3;
+  subscription1$ = new Subscription();
+  subscription2$ = new Subscription();
 
   constructor(
     private usuariosService: UsuariosService,
@@ -36,39 +39,29 @@ export class ListUsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    // todo: change latency on load myTypeUser
     this.getInfoMyUser();
     this.getAllUsuarios();
   }
 
   getAllUsuarios() {
-    this.usuariosService.getAllUsers().subscribe((usuario: Usuario[]) => {
-      usuario.forEach((user) => {
-        console.log(this.myTypeUser);
-        let available: boolean = false;
-        if (this.myTypeUser === 1 && user.fk_tipo_us === 2) available = true;
-        else if (this.myTypeUser === 1 && user.fk_tipo_us === 3)
-          available = true;
-        else if (this.myTypeUser === 2 && user.fk_tipo_us === 3)
-          available = true;
-
-        user.estado = available;
-        // console.log(`Id: ${user.id_usuario} -Estado: ${user.estado} - Tipo de usuario: ${user.fk_tipo_us}`);
+    this.subscription1$ = this.usuariosService
+      .getAllUsers()
+      .subscribe((usuario: Usuario[]) => {
+        this.dataSource.data = usuario;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
-
-      this.dataSource.data = usuario;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
   }
 
   getInfoMyUser() {
-    this.loginService.getDataUser().subscribe((user: any) => {
-      this.myTypeUser = user.usuario.fk_tipo_us;
-    });
+    this.subscription2$ = this.loginService
+      .getDataUser()
+      .subscribe((user: any) => {
+        this.myTypeUser = user.usuario.fk_tipo_us;
+      });
   }
 
-  sendId(id: number){
+  sendId(id: number) {
     this.usuariosIdEditService.setId(id);
   }
 
@@ -78,5 +71,10 @@ export class ListUsersComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription1$.unsubscribe();
+    this.subscription2$.unsubscribe();
   }
 }

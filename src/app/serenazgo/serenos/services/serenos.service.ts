@@ -34,6 +34,6 @@ export class SerenosService {
   }
 
   updateSerenoPatrullaje(fk_patrullaje: number | null, id_sereno: number) {
-    return this.http.put(`${this.url}/serenos_patrullaje`, { fk_patrullaje, id_sereno });
+    return this.http.put(`${this.url}/serenos/`, { fk_patrullaje, id_sereno }); 
   }
 }

@@ -13,7 +13,7 @@ export class LoginComponent {
   hide = true;
   public loginForm = this.fb.group({
     // /^\d{8}$/
-    dni: ['12345678', [Validators.required, Validators.pattern(/^\d{8}$/)]],
+    dni: ['87654321', [Validators.required, Validators.pattern(/^\d{8}$/)]],
     password: ['123456', [Validators.required]],
   });
 
@@ -27,7 +27,6 @@ export class LoginComponent {
   login() {
     this.loginService.login(this.loginForm.value).subscribe({
       next: (resp) => {
-        // console.log('resp->',resp)
         this.router.navigateByUrl('/serenazgo');
       },
       error: (err) => {

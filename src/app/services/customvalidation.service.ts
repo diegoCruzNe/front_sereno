@@ -8,7 +8,7 @@ export class CustomvalidationService {
 
   constructor() { }
 
-  matchPassword(newPass: string, confirmPass: string) {
+  matchPassword(newPass: string, confirmPass: string) { 
     return (formGroup: AbstractControl): ValidationErrors | null => {
       // const newPass: any = formGroup.get(newPass);
 

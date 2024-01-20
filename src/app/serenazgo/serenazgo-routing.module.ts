@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SerenoComponent } from './sereno/sereno.component';
 import { UsuariosGuard } from '../guards/usuarios.guard';
+import { DenunciasGuard } from '../guards/denuncias.guard';
+import { MisrutasGuard } from '../guards/misrutas.guard';
 
 const routes: Routes = [
   {
@@ -15,9 +17,10 @@ const routes: Routes = [
       { path: 'unidades', loadChildren: () => import('./unidad/unidad.module').then((m) => m.UnidadModule) },
       { path: 'grupos', loadChildren: () => import('./grupos/grupos.module').then((m) => m.GruposModule) },
       { path: 'user', loadChildren: () => import('./user/user.module').then((m) => m.UserModule) },
+      { path: 'rutas', canActivate: [MisrutasGuard], loadChildren: () => import('./rutas/rutas.module').then((m) => m.RutasModule) },
       { path: 'usuarios', canActivate: [UsuariosGuard], loadChildren: () => import('./usuarios/usuarios.module').then((m) => m.UsuariosModule) },
-      { path: 'denuncia', loadChildren: () => import("./denuncia/denuncia.module").then((m) => m.DenunciaModule) },
-      { path: '**', redirectTo: 'denuncia' },
+      { path: 'denuncia', canActivate: [DenunciasGuard], loadChildren: () => import("./denuncia/denuncia.module").then((m) => m.DenunciaModule) },
+      { path: '**', redirectTo: 'denuncia' },   
     ],
   },
 ];

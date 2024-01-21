@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { LocationService } from 'src/app/services/location.service';
 
 @Component({
@@ -6,7 +7,10 @@ import { LocationService } from 'src/app/services/location.service';
   templateUrl: './miruta.component.html',
   styleUrls: ['./miruta.component.css'],
 })
-export class MirutaComponent implements OnInit {
+export class MirutaComponent implements OnInit, OnDestroy {
+  subs1$ = new Subscription();
+  infoPos?: GeolocationPosition;
+
   constructor(private locationService: LocationService) {}
 
   ngOnInit() {
@@ -14,9 +18,13 @@ export class MirutaComponent implements OnInit {
   }
 
   getLocationBroswer() {
-    navigator.geolocation.watchPosition((resp) => {
-      console.log(resp.coords);
-      console.log(resp.timestamp);
+    this.subs1$ = this.locationService.getUserLocationObs().subscribe((pos) => {
+      console.log(pos.coords);
+      this.infoPos = pos;
     });
+  }
+
+  ngOnDestroy() {
+    this.subs1$.unsubscribe();
   }
 }

@@ -12,9 +12,7 @@ export class LocationService {
     return !!this.useLocation;
   }
 
-  constructor() {
-    /* this.getUserLocation() */
-  }
+  constructor() {}
 
   public async getUserLocationPromise(): Promise<[number, number]> {
     return new Promise((resolve, reject) => {
@@ -33,17 +31,15 @@ export class LocationService {
   }
 
   public getUserLocationObs() {
-    return new Observable<GeolocationPosition>(
-      (observer) => {
-        const watchPositionId = navigator.geolocation.watchPosition(
-          (pos) => observer.next(pos),
-          (err) => observer.error(err)
-        );
+    return new Observable<GeolocationPosition>((observer) => {
+      const watchPositionId = navigator.geolocation.watchPosition(
+        (pos) => observer.next(pos),
+        (err) => observer.error(err)
+      );
 
-        return () => {
-          navigator.geolocation.clearWatch(watchPositionId);
-        };
-      }
-    );
+      return () => {
+        navigator.geolocation.clearWatch(watchPositionId);
+      };
+    });
   }
 }

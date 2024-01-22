@@ -33,19 +33,17 @@ export class LocationService {
   }
 
   public getUserLocationObs() {
-    return new Observable<GeolocationPosition>((observer) => {
-      const watchPositionId = navigator.geolocation.watchPosition(
-        (pos) => observer.next(pos),
-        (err) => observer.error(err)
-      );
+    return new Observable<GeolocationPosition>(
+      (observer) => {
+        const watchPositionId = navigator.geolocation.watchPosition(
+          (pos) => observer.next(pos),
+          (err) => observer.error(err)
+        );
 
-      return () => {
-        navigator.geolocation.clearWatch(watchPositionId);
-      };
-    });
+        return () => {
+          navigator.geolocation.clearWatch(watchPositionId);
+        };
+      }
+    );
   }
-
-  // function than return a position observable
 }
-
-// navigator.geolocation -> emite valores mientras se va moviendo

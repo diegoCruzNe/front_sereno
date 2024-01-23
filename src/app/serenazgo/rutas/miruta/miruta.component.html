@@ -1,12 +1,15 @@
-<div class="flex-father-1">
-    <span>
-        <button (click)="updateUbication()" mat-fab matTooltip="Mi ubicación" color="primary">
-            <mat-icon>refresh</mat-icon>
-        </button>
-    </span>
+<div class="relative-1">
+    <div class="flex-father-1">
+        <span>
+            <button id="btnUpdate" (click)="updateUbication()" mat-fab matTooltip="Mi ubicación" color="primary">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </span>
+    </div>
 </div>
 
-
-<div class="flex-father-2">
-    <div id="map"></div>
+<div class="relative-2">
+    <div class="flex-father-2">
+        <div id="map"></div>
+    </div>
 </div>

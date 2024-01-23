@@ -66,7 +66,7 @@ export class RegistrarDenunciaComponent implements OnInit {
       apiKey: this.api_maps,
       libraries: ['places'],
     });
-    loader.importLibrary('maps').then(() => {   
+    loader.importLibrary('maps').then(() => {
       this.inicioMapa();
     });
 
@@ -142,7 +142,7 @@ export class RegistrarDenunciaComponent implements OnInit {
       if (myMarker) myMarker.setMap(null);
       myMarker = new google.maps.Marker({ position: e.latLng, map: this.map });
       this.map.panTo(e.latLng!);
-      
+
       this.formulario.controls['lat'].setValue(e.latLng!.toJSON().lat);
       this.formulario.controls['lng'].setValue(e.latLng!.toJSON().lng);
     });

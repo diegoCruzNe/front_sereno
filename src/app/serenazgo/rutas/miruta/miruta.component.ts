@@ -1,6 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription, take } from 'rxjs';
+import { Subscription, take, map } from 'rxjs';
 import { LocationService } from 'src/app/services/location.service';
 import { DialogUbicationComponent } from './dialog-ubication/dialog-ubication.component';
 import { Loader } from '@googlemaps/js-api-loader';
@@ -13,6 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class MirutaComponent implements OnInit, OnDestroy {
   subs1$ = new Subscription();
+  subs2$ = new Subscription();
   infoPos?: GeolocationPosition;
   myMap?: google.maps.Map;
 
@@ -26,66 +31,46 @@ export class MirutaComponent implements OnInit, OnDestroy {
     this.getLocationBroswer();
   }
 
-
-
-
-
-
   async loadMap(lat: number = 0, lng: number = 0) {
-    let markers: google.maps.Marker[] = [
-      new google.maps.Marker({
-        position: {
-          lat:  -6.834839409165937 ,
-          lng: -79.93054838055778 ,
-        }
-      }),
-
-      new google.maps.Marker({
-        position: {
-          lat:  -6.831004461555615, 
-          lng: -79.93938894129602 ,
-        }
-      }),
-    ];
-    const { AdvancedMarkerElement } = 
-      await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+    let markers: google.maps.Marker[] = [];
 
     this.myMap = new google.maps.Map(
       document.getElementById('map') as HTMLElement,
       {
         center: { lat, lng },
-        zoom: 11,
-        mapId: '4504f8b37365c3d0',
+        zoom: 13,
         mapTypeId: 'roadmap',
         disableDefaultUI: true,
         draggableCursor: 'default',
       }
     );
 
-     markers.forEach((marker) => marker.setMap(null));
-
-    markers.forEach((marker, i)=> {
-       const marcador = new AdvancedMarkerElement({
-        position: marker.getPosition(),
-        map: this.myMap,
-       })
-    })
-
-    new google.maps.Marker({
-      position: { lat, lng },
-      map: this.myMap,
+    const btnUpdate = document.getElementById('btnUpdate');
+    btnUpdate!.addEventListener('click', (ev) => {
+      this.updateMapWithCurrentLocation(markers);
     });
-
-    this.myMap.panTo({ lat, lng });
   }
 
+  updateMapWithCurrentLocation(markers: google.maps.Marker[]) {
+    navigator.geolocation.getCurrentPosition((pos) => {
+      markers.forEach((marker) => marker.setMap(null));
 
+      markers.push(
+        new google.maps.Marker({
+          position: {
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          },
+          map: this.myMap,
+        })
+      );
 
-
-
-
-
-
+      this.myMap?.panTo({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude,
+      });
+    });
+  }
 
   getLocationBroswer() {
     this.subs1$ = this.locationService
@@ -93,7 +78,6 @@ export class MirutaComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe({
         next: (pos) => {
-          // console.log(pos);
           this.infoPos = pos;
 
           const loader = new Loader({
@@ -101,31 +85,34 @@ export class MirutaComponent implements OnInit, OnDestroy {
             libraries: ['places'],
           });
 
-          loader.importLibrary('maps').then(() => {
-            this.loadMap(pos.coords.latitude, pos.coords.longitude);
-          });
+          loader
+            .importLibrary('maps')
+            .then(() => {
+              this.loadMap(pos.coords.latitude, pos.coords.longitude);
+            })
+            .then(() => {
+              let element: HTMLElement = document.getElementById(
+                'btnUpdate'
+              ) as HTMLElement;
+              element.click();
+            });
         },
-        error: (err) => {
-          // console.log(err);
-          this.openDialogPermissions();
-        }
+        error: (err) => this.openDialogPermissions(),
       });
   }
 
   updateUbication() {
-    this.locationService
+    this.subs2$ = this.locationService
       .getUserLocationObs()
       .pipe(take(1))
       .subscribe({
-        next: (pos) => {
-          console.log(pos);
-        },
+        next: (pos) => {},
         error: () => this.openDialogPermissions(),
       });
   }
 
   onPermissionsChange() {
-    console.log('onPermissionsChange');
+    //console.log('onPermissionsChange');
     navigator.permissions.query({ name: 'geolocation' }).then((result) => {
       if (result.state === 'denied') return this.openDialogPermissions();
     });
@@ -139,5 +126,6 @@ export class MirutaComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subs1$.unsubscribe();
+    this.subs2$.unsubscribe();
   }
 }

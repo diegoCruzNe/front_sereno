@@ -3,6 +3,9 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-end;
+
+    margin-top: 30px;
+
 }
 
 .flex-father-2 {
@@ -10,15 +13,26 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
-}
 
-span {
-    margin-right: 15px;
-    margin-top: 15px;
-    margin-bottom: 10px;
 }
 
 #map {
     height: 600px;
     width: 92vw;
+
+    margin-top: -65px;
+}
+
+.relative-1 {
+    position: relative;
+    z-index: 1;
+}
+
+.relative-2 {
+    position: relative;
+    z-index: 0;
+}
+
+span {
+    margin-right: 5vw;
 }

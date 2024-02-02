@@ -6,8 +6,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:3000',
-  api_maps: "????"
+    // baseUrl: '',
+    // api_maps: "" ,
 };
 
 /*

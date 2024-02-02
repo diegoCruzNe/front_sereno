@@ -1,8 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription, take, map } from 'rxjs';
 import { LocationService } from 'src/app/services/location.service';
@@ -29,7 +25,10 @@ export class MirutaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.onPermissionsChange();
     this.getLocationBroswer();
+     this.locationService.connect();
   }
+
+ 
 
   async loadMap(lat: number = 0, lng: number = 0) {
     let markers: google.maps.Marker[] = [];
@@ -38,7 +37,7 @@ export class MirutaComponent implements OnInit, OnDestroy {
       document.getElementById('map') as HTMLElement,
       {
         center: { lat, lng },
-        zoom: 13,
+        zoom: 2,
         mapTypeId: 'roadmap',
         disableDefaultUI: true,
         draggableCursor: 'default',
@@ -53,6 +52,8 @@ export class MirutaComponent implements OnInit, OnDestroy {
 
   updateMapWithCurrentLocation(markers: google.maps.Marker[]) {
     navigator.geolocation.getCurrentPosition((pos) => {
+      this.sendMyUbication(pos);
+
       markers.forEach((marker) => marker.setMap(null));
 
       markers.push(
@@ -69,6 +70,8 @@ export class MirutaComponent implements OnInit, OnDestroy {
         lat: pos.coords.latitude,
         lng: pos.coords.longitude,
       });
+
+      if (markers.length > 0) markers.splice(0, markers.length - 1);
     });
   }
 
@@ -91,7 +94,7 @@ export class MirutaComponent implements OnInit, OnDestroy {
               this.loadMap(pos.coords.latitude, pos.coords.longitude);
             })
             .then(() => {
-              let element: HTMLElement = document.getElementById(
+              const element: HTMLElement = document.getElementById(
                 'btnUpdate'
               ) as HTMLElement;
               element.click();
@@ -99,6 +102,15 @@ export class MirutaComponent implements OnInit, OnDestroy {
         },
         error: (err) => this.openDialogPermissions(),
       });
+  }
+
+  sendMyUbication(pos: GeolocationPosition) {
+    const info = {
+      time: pos.timestamp,
+      lat: pos.coords.latitude,
+      lng: pos.coords.longitude,
+    };
+    this.locationService.sendMessage(JSON.stringify(info));
   }
 
   updateUbication() {
@@ -127,5 +139,6 @@ export class MirutaComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subs1$.unsubscribe();
     this.subs2$.unsubscribe();
+    // this.locationService.disconnectSocket()
   }
 }

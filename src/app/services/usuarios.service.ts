@@ -6,6 +6,7 @@ import { Usuario } from '../interfaces/usuario.interface';
 
 const base_url = environment.baseUrl;
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,7 +14,7 @@ export class UsuariosService {
   constructor(private http: HttpClient) {}
 
   get token(): string {
-    return localStorage.getItem('token') || ''; 
+    return localStorage.getItem('token') || '';
   }
 
   get headers() {
@@ -25,7 +26,11 @@ export class UsuariosService {
   }
 
   changeMyPassword(pass: any) {
-    return this.http.post(`${base_url}/usuarios/change_my_password`, pass, this.headers);
+    return this.http.post(
+      `${base_url}/usuarios/change_my_password`,
+      pass,
+      this.headers
+    );
   }
 
   getAllUsers(): Observable<Usuario[]> {
@@ -36,7 +41,7 @@ export class UsuariosService {
     return this.http.patch(`${base_url}/usuarios/${id}`, usuario, this.headers);
   }
 
-  getUserById(id: number): Observable<Usuario> { 
+  getUserById(id: number): Observable<Usuario> {
     return this.http.get<Usuario>(`${base_url}/usuarios/${id}`, this.headers);
   }
 
@@ -46,6 +51,6 @@ export class UsuariosService {
   }
 
   creaeUser(usuario: any) {
-    return this.http.post(`${base_url}/usuarios`, usuario, this.headers)
+    return this.http.post(`${base_url}/usuarios`, usuario, this.headers);
   }
 }

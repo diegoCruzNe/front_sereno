@@ -1,21 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription, take, map } from 'rxjs';
+import { Subscription,  take } from 'rxjs';
+import { last } from 'rxjs/operators';
 import { LocationService } from 'src/app/services/location.service';
 import { DialogUbicationComponent } from './dialog-ubication/dialog-ubication.component';
 import { Loader } from '@googlemaps/js-api-loader';
 import { environment } from 'src/environments/environment';
+import { webSocket } from 'rxjs/webSocket';
 
 @Component({
   selector: 'app-miruta',
   templateUrl: './miruta.component.html',
   styleUrls: ['./miruta.component.css'],
 })
-export class MirutaComponent implements OnInit, OnDestroy {
+export class MirutaComponent implements OnInit, OnDestroy { 
+  wsUrl = environment.wsUrl;
   subs1$ = new Subscription();
   subs2$ = new Subscription();
   infoPos?: GeolocationPosition;
   myMap?: google.maps.Map;
+  subject = webSocket(this.wsUrl);
 
   constructor(
     private locationService: LocationService,
@@ -25,10 +29,8 @@ export class MirutaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.onPermissionsChange();
     this.getLocationBroswer();
-     this.locationService.connect();
+    this.subject.subscribe(console.log);
   }
-
- 
 
   async loadMap(lat: number = 0, lng: number = 0) {
     let markers: google.maps.Marker[] = [];
@@ -97,7 +99,8 @@ export class MirutaComponent implements OnInit, OnDestroy {
               const element: HTMLElement = document.getElementById(
                 'btnUpdate'
               ) as HTMLElement;
-              element.click();
+
+              setTimeout(() => element.click(), 1200);
             });
         },
         error: (err) => this.openDialogPermissions(),
@@ -110,7 +113,12 @@ export class MirutaComponent implements OnInit, OnDestroy {
       lat: pos.coords.latitude,
       lng: pos.coords.longitude,
     };
-    this.locationService.sendMessage(JSON.stringify(info));
+
+    this.subject.next('ws send');
+
+   /*  this.subject.pipe( last() ).subscribe({
+      next: (msg) => console.log('message received: ' + msg),
+    }); */
   }
 
   updateUbication() {
@@ -139,6 +147,7 @@ export class MirutaComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subs1$.unsubscribe();
     this.subs2$.unsubscribe();
-    // this.locationService.disconnectSocket()
+    //this.locationService.disconnectSocket();
+    this.subject.complete();
   }
 }

@@ -3,7 +3,7 @@
         <mat-card-title>Registrar nueva denuncia</mat-card-title>
         <mat-card-subtitle>Formulario</mat-card-subtitle>
     </mat-card-header>
-    <form [formGroup]="formulario" (ngSubmit)="crearEvent()">
+    <form [formGroup]="formulario" (ngSubmit)="registerDenuncia()">
         <mat-card-content>
 
             <div class="flex-group-a">
@@ -79,4 +79,4 @@
             <button mat-raised-button color="primary" type="submit" [disabled]="formulario.invalid">Siguiente</button>
         </mat-card-actions>
     </form>
-</mat-card> 
+</mat-card>

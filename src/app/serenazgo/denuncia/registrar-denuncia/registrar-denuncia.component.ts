@@ -10,6 +10,8 @@ import {
 import * as moment from 'moment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
+import { RegisDenuncia } from 'src/app/interfaces/regisDenuncia.interface';
+import { LoginService } from 'src/app/auth/services/login.service';
 
 export interface CaterogiaDelito {
   tipo_delito: string;
@@ -40,11 +42,13 @@ export class RegistrarDenunciaComponent implements OnInit {
   infowindow!: google.maps.InfoWindow;
   markers: google.maps.Marker[] = [];
   formulario: FormGroup;
+  userSystem: number = 0;
 
   constructor(
     private delitoService: DelitoService,
     private _snackBar: MatSnackBar,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private loginService: LoginService
   ) {
     this.formulario = new FormGroup({
       fecha: new FormControl(moment().toDate(), Validators.required),
@@ -53,7 +57,7 @@ export class RegistrarDenunciaComponent implements OnInit {
         Validators.maxLength(8),
       ]),
       tipo_delito: new FormControl('', Validators.required),
-      agraviado: new FormControl(''),
+      agraviado: new FormControl(),
       detalles: new FormControl(''),
       direccion: new FormControl(''),
       lat: new FormControl(''),
@@ -62,6 +66,7 @@ export class RegistrarDenunciaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getInfoUserSystem();
     const loader = new Loader({
       apiKey: this.api_maps,
       libraries: ['places'],
@@ -73,7 +78,7 @@ export class RegistrarDenunciaComponent implements OnInit {
     this.getDelitosPorCategoria();
   }
 
-  crearEvent() {
+  registerDenuncia() {
     if (
       this.formulario.value['lat'].length === 0 ||
       this.formulario.value['lng'].length === 0
@@ -82,8 +87,27 @@ export class RegistrarDenunciaComponent implements OnInit {
         duration: 2500,
       });
     }
-    console.log(this.formulario.value);
+
+    let copyData: RegisDenuncia = {
+      detalles: this.formulario.value['detalles'],
+      direccion: this.formulario.value['direccion'],
+      lat: this.formulario.value['lat'],
+      lng: this.formulario.value['lng'],
+      fecha: moment(this.formulario.value['fecha']).format('YYYY-MM-DD'),
+      delito: this.formulario.value['tipo_delito'],
+      denunciante: this.formulario.value['agraviado'] ?? null,
+      usuario: this.userSystem,
+    };
+
+    console.log(copyData);
+    
     return true;
+  }
+
+  getInfoUserSystem() {
+    this.loginService.getDataUser().subscribe((res) => {
+      this.userSystem = res.usuario.id_usuario || 0;
+    });
   }
 
   inicioMapa() {

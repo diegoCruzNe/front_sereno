@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-    // api_maps: "" ,
-    // baseUrl: '',
+  api_maps: '',
+  baseUrl: '',
+  wsUrl: '',
 };

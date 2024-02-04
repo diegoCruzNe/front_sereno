@@ -7,7 +7,8 @@
 export const environment = {
   production: false,
     // baseUrl: '',
-    // api_maps: "" ,
+    // api_maps: '' ,
+    // wsUrl: '',
 };
 
 /*

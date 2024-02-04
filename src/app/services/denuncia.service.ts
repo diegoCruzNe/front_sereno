@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ListDenuncias } from '../interfaces/listDenuncias.interface';
+import { RegisDenuncia } from '../interfaces/regisDenuncia.interface';
 
 const base_url = environment.baseUrl;
 
@@ -26,8 +27,7 @@ export class DenunciaService {
     if (page !== undefined) params = params.set('page', page.toString());
     if (limit !== undefined) params = params.set('limit', limit.toString());
 
-    // return this.http.get<ListDenuncias>(`${base_url}/denuncia`, {
-    return this.http.get<ListDenuncias>(`${base_url}/denuncia`, { 
+    return this.http.get<ListDenuncias>(`${base_url}/denuncia`, {
       headers: {
         'x-token': this.token,
       },
@@ -36,12 +36,15 @@ export class DenunciaService {
   }
 
   getListDenunciasByDate(date: string) {
-    // return this.http.get<ListDenuncias>(`${base_url}/denuncia_buscar`, {
     return this.http.get<ListDenuncias>(`${base_url}/denuncia/buscar_by_date`, {
       headers: {
         'x-token': this.token,
       },
       params: { date: date },
     });
+  }
+
+  registerDenuncia(denuncia: RegisDenuncia) {
+    return this.http.post(`${base_url}/denuncia`, denuncia, this.headers);
   }
 }

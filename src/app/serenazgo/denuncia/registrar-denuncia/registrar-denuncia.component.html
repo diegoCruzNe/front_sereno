@@ -76,7 +76,8 @@
         <mat-card-actions align="end">
             <button type="button" [routerLink]="['/serenazgo/denuncia/listado']" mat-raised-button
                 style="margin-right: 8px;">Cancelar</button>
-            <button mat-raised-button color="primary" type="submit" [disabled]="formulario.invalid">Siguiente</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="formulario.invalid"
+            [class.spinner]="statusButton" >Siguiente</button>
         </mat-card-actions>
     </form>
 </mat-card>

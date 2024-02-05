@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from 'src/environments/environment';
 import { RegisDenuncia } from 'src/app/interfaces/regisDenuncia.interface';
 import { LoginService } from 'src/app/auth/services/login.service';
+import { DenunciaService } from 'src/app/services/denuncia.service';
 
 export interface CaterogiaDelito {
   tipo_delito: string;
@@ -43,12 +44,14 @@ export class RegistrarDenunciaComponent implements OnInit {
   markers: google.maps.Marker[] = [];
   formulario: FormGroup;
   userSystem: number = 0;
+  statusButton: boolean = false;
 
   constructor(
     private delitoService: DelitoService,
     private _snackBar: MatSnackBar,
     private fb: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private denunciaService: DenunciaService
   ) {
     this.formulario = new FormGroup({
       fecha: new FormControl(moment().toDate(), Validators.required),
@@ -99,8 +102,24 @@ export class RegistrarDenunciaComponent implements OnInit {
       usuario: this.userSystem,
     };
 
-    console.log(copyData);
-    
+    this.statusButton = true;
+
+    this.denunciaService.registerDenuncia(copyData).subscribe({
+      next: (res) => {
+        this._snackBar.open(res.msg, 'Ok', {
+          duration: 2500,
+        });
+        this.formulario.controls['tipo_delito'].reset();
+        this.statusButton = false;
+      },
+      error: (err) => {
+        this._snackBar.open(err, 'Error', {
+          duration: 2500,
+        });
+        console.log(err);
+      },
+    });
+
     return true;
   }
 

@@ -5,6 +5,12 @@ import { environment } from 'src/environments/environment';
 import { ListDenuncias } from '../interfaces/listDenuncias.interface';
 import { RegisDenuncia } from '../interfaces/regisDenuncia.interface';
 
+interface ResDenuncia {
+  ok: boolean;
+  msg: string;
+  idDenuncia?: number;
+}
+
 const base_url = environment.baseUrl;
 
 @Injectable({
@@ -44,7 +50,11 @@ export class DenunciaService {
     });
   }
 
-  registerDenuncia(denuncia: RegisDenuncia) {
-    return this.http.post(`${base_url}/denuncia`, denuncia, this.headers);
+  registerDenuncia(denuncia: RegisDenuncia): Observable<ResDenuncia> {
+    return this.http.post<ResDenuncia>(
+      `${base_url}/denuncia`,
+      denuncia,
+      this.headers
+    );
   }
 }

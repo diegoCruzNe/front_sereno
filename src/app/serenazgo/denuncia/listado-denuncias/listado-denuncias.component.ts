@@ -12,7 +12,7 @@ import { DenunciaService } from 'src/app/services/denuncia.service';
   styleUrls: ['./listado-denuncias.component.css'],
 })
 export class ListadoDenunciasComponent implements AfterViewInit {
-  columnas = ['id_denuncia', 'fecha', 'hora', 'delito'];
+  columnas = ['id_denuncia', 'fecha', 'hora', 'delito', 'estado'];
   data: Denuncias[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   resultsLength: number = 0;
@@ -62,6 +62,8 @@ export class ListadoDenunciasComponent implements AfterViewInit {
             });
             this.getData();
           } else if (response.total > 0) {
+            // todo: fix backend
+            console.log(response.denuncias[0].estado);
             this.data = response.denuncias;
             this.resultsLength = response.total;
             this.pageSize = 1;

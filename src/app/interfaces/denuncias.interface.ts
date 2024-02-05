@@ -4,4 +4,5 @@ export interface Denuncias {
   hora: string;
   delito: string;
   dni?: string;
+  estado: string;
 }

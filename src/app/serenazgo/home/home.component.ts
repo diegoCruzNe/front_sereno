@@ -20,6 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { LoginService } from 'src/app/auth/services/login.service';
+// changes
 
 @Component({
   selector: 'app-home',
